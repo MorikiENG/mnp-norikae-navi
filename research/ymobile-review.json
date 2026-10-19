@@ -1,0 +1,25 @@
+{
+  "sourceUrl": "https://www.ymobile.jp/plan/",
+  "recordedAt": "2026-10-19",
+  "evidenceType": "user-provided screenshot of official page",
+  "status": "partial-review",
+  "plans": [
+    { "name": "シンプル3 S", "dataGB": 5, "baseMonthlyYenTaxIncluded": 3278 },
+    { "name": "シンプル3 M", "dataGB": 30, "baseMonthlyYenTaxIncluded": 4378 },
+    { "name": "シンプル3 L", "dataGB": 35, "baseMonthlyYenTaxIncluded": 5478 }
+  ],
+  "observedDiscounts": {
+    "monthlyYenTaxIncluded": [858, 1958, 3058],
+    "visibleConditions": ["おうち割 光セット（A）適用", "PayPayカードゴールド支払い", "翌月から"],
+    "eligibleForCalculation": false,
+    "reason": "割引の条件一式と付帯費用は未確認"
+  },
+  "unconfirmed": [
+    "通常通話単価と対象外通話",
+    "各プランに含まれる無料通話と通話オプション",
+    "オンラインMNPの契約事務・SIM発行手数料",
+    "基本料金の適用開始日と今後の改定",
+    "容量超過後の通信制限条件"
+  ],
+  "note": "画像内の税込基本料金を記録。適用開始日は画像から確定できず、推測しない。全項目を確認するまでcatalog.jsonのpendingを維持。"
+}
