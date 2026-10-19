@@ -21,3 +21,9 @@ MorikiENG/MorikiENG.github.ioのサイトマップを確認。実URL https://mor
 ## 残る確認
 
 Search Consoleに登録した正確なプロパティとサイトマップURL、失敗の詳細、公開URLテストの「ページの取得」を確認する。ブラウザからの取得成功だけをGooglebotの成功と見なさない。Googleに送信したURLや旧デプロイの取り違え、Google固有の取得拒否、一時的な取得失敗などは候補だが、現時点でいずれも確定していない。再送信を繰り返したりセキュリティを一律解除したりする前に証拠を得る。
+
+## Google公開URLテストの利用者確認
+
+運営者がSearch Consoleの公開URLテスト画面を共有し、検査対象が https://mnp-norikae-navi.pages.dev/sitemap.xml であると明示した。画面は「URLはGoogleに登録できます」「ページをインデックスに登録可能です」の成功表示。この結果は当該Googleテスト経路・検査時点で取得可能だったことを示す証拠として扱い、Codex側403をGoogleへの恒常的な拒否の根拠とはしない。
+
+ただし、この成功表示だけではサイトマップ専用処理によるXML解析成功や、応答本文が期待どおりのXMLであることまでは確定しない。実配信の /diagnostics/ によるXML構造・Content-Type・URL件数・公開モードの確認、およびサイトマップレポートの再取得結果は未確認。
