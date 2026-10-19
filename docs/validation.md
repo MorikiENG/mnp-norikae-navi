@@ -34,3 +34,11 @@ GitHub Actionsのリポジトリ設定読み取りは接続権限不足（403）
 本番ビルドのcanonical・sitemap・robotsと未確認ページの検索除外、文字列falseを公開承認にしないことの2件を追加。外部公開を伴わず一時ディレクトリで検証。Node33件＋Python6件、計39件が成功。共同作業の順序は `docs/remaining-work.md` に記録。
 
 GitHubのPR作成許可変更後、[再実行した監視ジョブ](https://github.com/MorikiENG/mnp-norikae-navi/actions/runs/39265795268)が成功し、PR #1の自動更新を確認。先のPR作成権限の保留は解消した。Node33件＋Python6件の[CIも成功](https://github.com/MorikiENG/mnp-norikae-navi/actions/runs/39265771641)。
+
+## 確認版での利用者による操作確認
+
+確認日：2026年10月19日。対象：https://mnp-norikae-navi.pages.dev/
+
+運営者から、タイトル・料金入力フォームが表示され、案内したサンプル計算と内訳・グラフ・CSV保存が問題なく動作したとの回答を得た。サンプルは現在au、月6,000円、10GB、通話なし、2026年10月開始、解約費0円、その他初期値。日本通信SIMみんなのプランの節約額は6/12/24か月で24,360/52,020/107,340円、損益分岐点は1か月目。
+
+これは利用者によるブラウザ確認であり、Codexによる画面の直接観察ではない。端末・OS・ブラウザ種別、狭い画面、スクリーンリーダー、広告ブロッカー、配信ヘッダー、robotsは未確認。CodexからのHTTP検証はCloudflareの403/error code:1010で拒否されたため、確認済みとはしない。
