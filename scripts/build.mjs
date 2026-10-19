@@ -1,7 +1,13 @@
+import { createHash } from 'node:crypto';
 import { sitemapXml } from './sitemap.mjs';
 import { readFile, writeFile, mkdir, rm, cp } from 'node:fs/promises';
 const data = JSON.parse(await readFile('data/catalog.json', 'utf8'));
 const ads = JSON.parse(await readFile('data/ads.json', 'utf8'));
+const diagnosticHash = createHash('sha256')
+  .update(await readFile('src/diagnostics.mjs'))
+  .digest('hex')
+  .slice(0, 12);
+const diagnosticAsset = `/diagnostics-${diagnosticHash}.mjs`;
 const publication = JSON.parse(await readFile('data/publication.json', 'utf8'));
 // Cloudflare's main deployment may use the operator-approved tracked policy.
 // Local builds and other branches stay noindex unless explicitly configured.
@@ -207,10 +213,11 @@ await page(
   '/diagnostics/',
   '配信設定の確認',
   'ブラウザ内で配信ヘッダーと検索設定を確認します。',
-  `<h1>配信設定の確認</h1><p>このサイトの公開情報をブラウザ内で読み取ります。診断結果を外部に送信・保存しません。</p><button type="button" id="diagnostic-run" class="primary">再確認する</button><pre id="diagnostic-output" role="status" style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.8"></pre><p>結果をコピーするか、画面を共有して確認に使えます。</p><script type="module" src="/diagnostics.mjs"></script>`,
+  `<h1>配信設定の確認</h1><p>このサイトの公開情報をブラウザ内で読み取ります。診断結果を外部に送信・保存しません。</p><button type="button" id="diagnostic-run" class="primary">再確認する</button><pre id="diagnostic-output" role="status" style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.8"></pre><p>結果をコピーするか、画面を共有して確認に使えます。</p><script type="module" src="${diagnosticAsset}"></script>`,
   { index: false },
 );
 await cp('src/diagnostics.mjs', 'dist/diagnostics.mjs');
+await cp('src/diagnostics.mjs', `dist${diagnosticAsset}`);
 await cp('dist/404/index.html', 'dist/404.html');
 for (const file of ['app.mjs', 'engine.mjs', 'style.css'])
   await cp(`src/${file}`, `dist/${file}`);
@@ -229,7 +236,7 @@ await writeFile(
 if (production) await writeFile('dist/sitemap.xml', sitemapXml(origin, pages));
 await writeFile(
   'dist/_headers',
-  `/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: DENY\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'\n/catalog.json\n  Cache-Control: public, max-age=300\n/sitemap.xml\n  Content-Type: application/xml; charset=utf-8\n  Cache-Control: no-cache\n`,
+  `/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: DENY\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'\n/catalog.json\n  Cache-Control: public, max-age=300\n/diagnostics/*\n  Cache-Control: no-store\n/build-info.json\n  Cache-Control: no-store\n/robots.txt\n  Cache-Control: no-cache\n/sitemap.xml\n  Content-Type: application/xml; charset=utf-8\n  Cache-Control: no-cache\n`,
 );
 await writeFile(
   'dist/build-info.json',

@@ -10,6 +10,7 @@ async function run() {
   button.disabled = true;
   output.textContent = '確認しています…';
   const lines = [`MNPのりかえ Navi 配信診断（${now}）`];
+  lines.push('診断コード：sitemap-v3（XML本文検査対応）');
   const check = (ok, label) => lines.push(`${ok ? 'OK' : '要確認'}：${label}`);
   try {
     const responses = await Promise.all(
