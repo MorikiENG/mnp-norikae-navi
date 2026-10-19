@@ -16,6 +16,7 @@ async function htmlFiles(dir) {
 }
 test('generated pages have Japanese language, titles, metadata and no unresolved templates', async () => {
   for (const f of await htmlFiles('dist')) {
+    if (path.basename(f) === 'googled86428f90575e69a.html') continue;
     const h = await readFile(f, 'utf8');
     assert.match(h, /<html lang="ja">/, f);
     assert.match(h, /<title>[^<]+<\/title>/, f);
@@ -78,4 +79,8 @@ test('calculator source stores no contract data and uses no external API', async
     /localStorage|sessionStorage|document\.cookie|fetch\(['"]https?:/,
   );
   assert.match(s, /fetch\('\/catalog.json'\)/);
+});
+
+test('Google ownership file is served verbatim without a page wrapper', async () => {
+  assert.equal(await readFile('dist/googled86428f90575e69a.html', 'utf8'), 'google-site-verification: googled86428f90575e69a.html\n');
 });

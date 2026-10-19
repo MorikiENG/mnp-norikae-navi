@@ -182,6 +182,7 @@ await cp('dist/404/index.html', 'dist/404.html');
 for (const file of ['app.mjs', 'engine.mjs', 'style.css'])
   await cp(`src/${file}`, `dist/${file}`);
 await cp('data/catalog.json', 'dist/catalog.json');
+await cp('src/googled86428f90575e69a.html', 'dist/googled86428f90575e69a.html');
 await writeFile(
   'dist/favicon.svg',
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#087e74"/><path d="M14 23h34l-8-8m10 26H16l8 8" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
