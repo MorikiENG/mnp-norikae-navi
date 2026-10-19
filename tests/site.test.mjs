@@ -84,3 +84,8 @@ test('calculator source stores no contract data and uses no external API', async
 test('Google ownership file is served verbatim without a page wrapper', async () => {
   assert.equal(await readFile('dist/googled86428f90575e69a.html', 'utf8'), 'google-site-verification: googled86428f90575e69a.html\n');
 });
+
+test('homepage includes the operator-provided Google verification tag in its head', async () => {
+  const head = (await readFile('dist/index.html', 'utf8')).split('</head>')[0];
+  assert.match(head, /<meta name="google-site-verification" content="eaIJri9lcP0T4RwPPBHuA5Ff4wpBPKTIlGUgFuHhc6U">/);
+});
