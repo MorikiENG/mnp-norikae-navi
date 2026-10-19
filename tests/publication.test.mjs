@@ -84,6 +84,9 @@ for (const scenario of [
         );
         assert.doesNotMatch(sitemap, /\/diagnostics\/|\/404\//);
       } else {
+        await assert.rejects(readFile(path.join(cwd, 'dist/sitemap.txt')), {
+          code: 'ENOENT',
+        });
         await assert.rejects(readFile(path.join(cwd, 'dist/sitemap.xml')), {
           code: 'ENOENT',
         });

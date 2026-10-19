@@ -10,7 +10,7 @@ const xmlEscape = (value) =>
         "'": '&apos;',
       })[character],
   );
-export function sitemapXml(origin, paths) {
+function sitemapUrls(origin, paths) {
   if (!paths.length) throw new Error('本番サイトマップが空です');
   const base = new URL(origin);
   if (
@@ -32,6 +32,15 @@ export function sitemapXml(origin, paths) {
   });
   if (new Set(urls).size !== urls.length)
     throw new Error('サイトマップURLが重複しています');
+  return urls;
+}
+
+export function sitemapText(origin, paths) {
+  return sitemapUrls(origin, paths).join('\n') + '\n';
+}
+
+export function sitemapXml(origin, paths) {
+  const urls = sitemapUrls(origin, paths);
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',

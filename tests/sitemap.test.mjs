@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { sitemapXml } from '../scripts/sitemap.mjs';
+import { sitemapXml, sitemapText } from '../scripts/sitemap.mjs';
 test('sitemap escapes URL data and puts XML declaration at byte zero', () => {
   const xml = sitemapXml('https://example.com', ['/', '/?a=1&b=2']);
   assert.ok(xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>\n'));
@@ -17,4 +17,10 @@ test('sitemap rejects empty, duplicate, cross-host and embedded-newline entries'
   ]) {
     assert.throws(() => sitemapXml('https://example.com', paths));
   }
+});
+
+test('plain text sitemap contains exactly one unescaped absolute URL per line', () => {
+  const txt = sitemapText('https://example.com', ['/', '/?a=1&b=2']);
+  assert.equal(txt, 'https://example.com/\nhttps://example.com/?a=1&b=2\n');
+  assert.throws(() => sitemapText('https://example.com', []));
 });
