@@ -19,3 +19,12 @@
 Cloudflareでの配信・HTTPヘッダー適用・本番ドメイン、AdSense実広告、承認済み広告リンクの表示は未検証。本人の公開許可とサービス設定後に実施する。
 
 GitHub Actionsのリポジトリ設定読み取りは接続権限不足（403）で、PR作成許可の状態を確認できない。定期ジョブとPR作成の運用有効化は `docs/deployment.md` に従って確認する。
+
+## GitHubでの実行
+
+- [Verify static site](https://github.com/MorikiENG/mnp-norikae-navi/actions/runs/39265046507)：成功。GitHub上でもNode/Pythonテストと静的ビルドを実行済み。
+- [Official tariff change candidates](https://github.com/MorikiENG/mnp-norikae-navi/actions/runs/39265106968)：検知と候補ブランチへのpushは成功、PR作成はリポジトリ設定で拒否。エラーは `GitHub Actions is not permitted to create or approve pull requests`。
+- [確認候補PR #1](https://github.com/MorikiENG/mnp-norikae-navi/pull/1)：接続済みのGitHub権限で作成。未マージ。料金カタログの変更なし。
+- GitHubランナーではLINEMO2ページとワイモバイルを取得できた。一方、ahamo2ページは `UNSAFE_LEGACY_RENEGOTIATION_DISABLED` で取得不能。この環境差も候補に記録し、TLS検証を弱めたり料金を推測したりしていない。
+
+今後の自動PRにはGitHub Settings → Actions → General → Allow GitHub Actions to create and approve pull requestsを有効にする必要がある。設定変更は未実施。自動承認・自動マージは実装していない。

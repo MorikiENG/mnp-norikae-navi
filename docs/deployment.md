@@ -47,3 +47,7 @@ URLにパスや末尾スラッシュを含めない。ビルドはURL・承認�
 ## ロールバック
 
 料金誤り時は誤ったプランをpendingへ変更して除外し、再検証して更新する。公開済みの場合はCloudflare Pagesで直前の正常デプロイへロールバックできる。確認候補のマージだけでは料金本体は変わらない。
+
+## 実行確認で判明した残作業
+
+GitHub CIは成功。変更検知の手動実行では候補ブランチを作成できたが、GitHub ActionsからのPR作成は設定で拒否された。本人が上記の「Allow GitHub Actions to create and approve pull requests」を有効化した後、tariff-watchを再実行して自動PR作成を確認する。接続済み権限で作成した確認候補PR #1は未マージで残している。
