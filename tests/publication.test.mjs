@@ -64,11 +64,11 @@ for (const scenario of [
       assert.equal(info.production, scenario.production);
       const html = await readFile(path.join(cwd, 'dist/index.html'), 'utf8');
       const robots = await readFile(path.join(cwd, 'dist/robots.txt'), 'utf8');
-      const sitemap = await readFile(
-        path.join(cwd, 'dist/sitemap.xml'),
-        'utf8',
-      );
       if (scenario.production) {
+        const sitemap = await readFile(
+          path.join(cwd, 'dist/sitemap.xml'),
+          'utf8',
+        );
         assert.doesNotMatch(html, /noindex,nofollow/);
         assert.match(
           html,
@@ -84,6 +84,9 @@ for (const scenario of [
         );
         assert.doesNotMatch(sitemap, /\/diagnostics\/|\/404\//);
       } else {
+        await assert.rejects(readFile(path.join(cwd, 'dist/sitemap.xml')), {
+          code: 'ENOENT',
+        });
         assert.match(html, /noindex,nofollow/);
         assert.match(robots, /Disallow: \//);
       }

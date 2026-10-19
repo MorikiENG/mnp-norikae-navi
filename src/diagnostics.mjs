@@ -22,13 +22,15 @@ async function run() {
       ].map((path) => fetch(path, { cache: 'no-store', credentials: 'omit' })),
     );
     const [home, robots, info, catalog, sitemap] = responses;
-    responses.forEach((r, index) =>
-      check(
-        r.ok,
-        `${['トップページ', 'robots.txt', 'ビルド情報', '料金データ', 'サイトマップ'][index]} HTTP ${r.status}`,
-      ),
-    );
-    if (responses.some((r) => !r.ok))
+    responses
+      .slice(0, 4)
+      .forEach((r, index) =>
+        check(
+          r.ok,
+          `${['トップページ', 'robots.txt', 'ビルド情報', '料金データ', 'サイトマップ'][index]} HTTP ${r.status}`,
+        ),
+      );
+    if (responses.slice(0, 4).some((r) => !r.ok))
       throw new Error('取得できない項目があります');
     const html = await home.text(),
       rules = await robots.text(),
@@ -86,47 +88,57 @@ async function run() {
         'サイトマップURL',
       );
     }
-    const sitemapText = await sitemap.text();
-    const xml = new DOMParser().parseFromString(sitemapText, 'application/xml');
-    const namespace = 'http://www.sitemaps.org/schemas/sitemap/0.9';
-    const xmlValid =
-      xml.querySelector('parsererror') === null &&
-      xml.documentElement.localName === 'urlset' &&
-      xml.documentElement.namespaceURI === namespace;
-    check(xmlValid, 'サイトマップXML構造');
-    check(
-      /(?:application|text)\/xml/i.test(
-        sitemap.headers.get('content-type') || '',
-      ),
-      'サイトマップContent-Type',
-    );
-    check(
-      !sitemap.redirected && sitemap.url === location.origin + '/sitemap.xml',
-      'サイトマップにリダイレクトなし',
-    );
-    const urls = Array.from(
-      xml.getElementsByTagNameNS(namespace, 'loc'),
-      (node) => node.textContent.trim(),
-    );
-    lines.push(`サイトマップURL件数：${urls.length}`);
     if (build.production) {
-      check(
-        urls.length > 0 &&
-          urls.every((url) => {
-            try {
-              return new URL(url).origin === location.origin;
-            } catch {
-              return false;
-            }
-          }),
-        'サイトマップに同一サイトの絶対URLを収録',
+      check(sitemap.ok, `本番サイトマップ HTTP ${sitemap.status}`);
+      const sitemapText = await sitemap.text();
+      const xml = new DOMParser().parseFromString(
+        sitemapText,
+        'application/xml',
       );
-      check(new Set(urls).size === urls.length, 'サイトマップURL重複なし');
+      const namespace = 'http://www.sitemaps.org/schemas/sitemap/0.9';
+      const xmlValid =
+        xml.querySelector('parsererror') === null &&
+        xml.documentElement.localName === 'urlset' &&
+        xml.documentElement.namespaceURI === namespace;
+      check(xmlValid, 'サイトマップXML構造');
+      check(
+        /(?:application|text)\/xml/i.test(
+          sitemap.headers.get('content-type') || '',
+        ),
+        'サイトマップContent-Type',
+      );
+      check(
+        !sitemap.redirected && sitemap.url === location.origin + '/sitemap.xml',
+        'サイトマップにリダイレクトなし',
+      );
+      const urls = Array.from(
+        xml.getElementsByTagNameNS(namespace, 'loc'),
+        (node) => node.textContent.trim(),
+      );
+      lines.push(`サイトマップURL件数：${urls.length}`);
+      if (build.production) {
+        check(
+          urls.length > 0 &&
+            urls.every((url) => {
+              try {
+                return new URL(url).origin === location.origin;
+              } catch {
+                return false;
+              }
+            }),
+          'サイトマップに同一サイトの絶対URLを収録',
+        );
+        check(new Set(urls).size === urls.length, 'サイトマップURL重複なし');
+      }
+      lines.push(`サイトマップ確認先：${location.origin}/sitemap.xml`);
+      lines.push(
+        'この診断は利用中のブラウザからの取得です。Googlebotからの取得可否はSearch Consoleの公開URLテストで確認してください。',
+      );
+    } else {
+      lines.push(
+        '確認版ではサイトマップを配信しません。正式公開後に送信してください。',
+      );
     }
-    lines.push(`サイトマップ確認先：${location.origin}/sitemap.xml`);
-    lines.push(
-      'この診断は利用中のブラウザからの取得です。Googlebotからの取得可否はSearch Consoleの公開URLテストで確認してください。',
-    );
     const verified = data.plans.filter((p) => p.status === 'verified');
     check(
       verified.length > 0 &&

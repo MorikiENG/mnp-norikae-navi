@@ -14,6 +14,11 @@ class SitemapTests(unittest.TestCase):
    for key in ['SITE_URL','PRODUCTION','PUBLICATION_APPROVED','CF_PAGES','CF_PAGES_BRANCH']: env.pop(key,None)
    env.update(CF_PAGES='1', CF_PAGES_BRANCH='main')
    subprocess.run(['node',str(ROOT/'scripts/build.mjs')],cwd=work,env=env,check=True,capture_output=True,text=True)
+   raw = (work/'dist/sitemap.xml').read_bytes()
+   self.assertTrue(raw.startswith(b'<?xml version="1.0" encoding="UTF-8"?>\n'))
+   self.assertTrue(raw.endswith(b'</urlset>\n'))
+   raw.decode('utf-8', errors='strict')
+   self.assertIn('/sitemap.xml\n  Content-Type: application/xml; charset=utf-8', (work/'dist/_headers').read_text())
    tree = ET.parse(work/'dist/sitemap.xml')
    self.assertEqual(tree.getroot().tag,'{'+NS['s']+'}urlset')
    urls = [node.text for node in tree.findall('s:url/s:loc',NS)]

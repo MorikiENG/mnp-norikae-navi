@@ -1,3 +1,4 @@
+import { sitemapXml } from './sitemap.mjs';
 import { readFile, writeFile, mkdir, rm, cp } from 'node:fs/promises';
 const data = JSON.parse(await readFile('data/catalog.json', 'utf8'));
 const ads = JSON.parse(await readFile('data/ads.json', 'utf8'));
@@ -225,13 +226,10 @@ await writeFile(
     ? `User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n`
     : 'User-agent: *\nDisallow: /\n',
 );
-await writeFile(
-  'dist/sitemap.xml',
-  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${origin ? pages.map((p) => `<url><loc>${origin}${p}</loc></url>`).join('') : ''}</urlset>`,
-);
+if (production) await writeFile('dist/sitemap.xml', sitemapXml(origin, pages));
 await writeFile(
   'dist/_headers',
-  `/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: DENY\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'\n/catalog.json\n  Cache-Control: public, max-age=300\n`,
+  `/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: DENY\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'\n/catalog.json\n  Cache-Control: public, max-age=300\n/sitemap.xml\n  Content-Type: application/xml; charset=utf-8\n  Cache-Control: no-cache\n`,
 );
 await writeFile(
   'dist/build-info.json',
