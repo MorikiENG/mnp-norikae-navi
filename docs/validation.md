@@ -28,3 +28,7 @@ GitHub Actionsのリポジトリ設定読み取りは接続権限不足（403）
 - GitHubランナーではLINEMO2ページとワイモバイルを取得できた。一方、ahamo2ページは `UNSAFE_LEGACY_RENEGOTIATION_DISABLED` で取得不能。この環境差も候補に記録し、TLS検証を弱めたり料金を推測したりしていない。
 
 今後の自動PRにはGitHub Settings → Actions → General → Allow GitHub Actions to create and approve pull requestsを有効にする必要がある。設定変更は未実施。自動承認・自動マージは実装していない。
+
+## 共同作業の再開時に追加した検証
+
+本番ビルドのcanonical・sitemap・robotsと未確認ページの検索除外、文字列falseを公開承認にしないことの2件を追加。外部公開を伴わず一時ディレクトリで検証。Node33件＋Python6件、計39件が成功。共同作業の順序は `docs/remaining-work.md` に記録。
