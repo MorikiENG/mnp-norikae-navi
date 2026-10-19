@@ -32,3 +32,5 @@ GitHub Actionsのリポジトリ設定読み取りは接続権限不足（403）
 ## 共同作業の再開時に追加した検証
 
 本番ビルドのcanonical・sitemap・robotsと未確認ページの検索除外、文字列falseを公開承認にしないことの2件を追加。外部公開を伴わず一時ディレクトリで検証。Node33件＋Python6件、計39件が成功。共同作業の順序は `docs/remaining-work.md` に記録。
+
+GitHubのPR作成許可変更後、[再実行した監視ジョブ](https://github.com/MorikiENG/mnp-norikae-navi/actions/runs/39265795268)が成功し、PR #1の自動更新を確認。先のPR作成権限の保留は解消した。Node33件＋Python6件の[CIも成功](https://github.com/MorikiENG/mnp-norikae-navi/actions/runs/39265771641)。

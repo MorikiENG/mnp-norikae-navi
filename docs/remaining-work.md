@@ -23,3 +23,12 @@
 - ワイモバイル公式ページは開発環境・Web取得とも403。金額や条件は推測しない。
 - ActionsによるPR作成は前回の実行でリポジトリ設定により拒否。設定変更の連絡後に再実行する。
 - Cloudflare認証は未接続。認証情報やパスワードをチャットで送信する必要はない。
+
+## 共同作業での進捗（2026年10月19日）
+
+- 運営者がGitHub ActionsのPR作成許可を保存した。
+- 再実行した変更検知ジョブは成功し、PR #1を自動更新した： https://github.com/MorikiENG/mnp-norikae-navi/actions/runs/39265795268
+- 最新のpushに対するCIも成功： https://github.com/MorikiENG/mnp-norikae-navi/actions/runs/39265771641
+- 運営者はCloudflareへのログインが可能で、pages.devの確認版配信を許可済み。noindexだがURLを知る人は閲覧できる点を説明済み。
+- 正式公開、クロール許可、広告配信は引き続き未承認。確認版はPRODUCTION=falseを維持する。
+- 次の操作は本人のCloudflare画面でPagesと指定リポジトリを接続し、確認用URLを共有すること。
