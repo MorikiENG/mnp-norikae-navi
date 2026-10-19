@@ -1,0 +1,24 @@
+name: 料金データの訂正
+description: 公式情報に基づく料金・条件の訂正依頼
+body:
+  - type: markdown
+    attributes:
+      value: 電話番号・契約番号などの個人情報は記載しないでください。
+  - type: input
+    id: plan
+    attributes:
+      label: 対象ブランド・プラン・ページ
+    validations:
+      required: true
+  - type: textarea
+    id: discrepancy
+    attributes:
+      label: 表示内容と正しい内容
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: 公式参照元URL
+    validations:
+      required: true

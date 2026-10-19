@@ -1,0 +1,16 @@
+{
+  "name": "mnp-norikae-navi",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node scripts/validate-data.mjs && node scripts/build.mjs",
+    "test": "node --test",
+    "check:data": "node scripts/validate-data.mjs",
+    "check:updates": "node scripts/check-updates.mjs",
+    "preview": "node scripts/serve.mjs"
+  }
+}

@@ -1,0 +1,421 @@
+<section class="hero">
+  <div>
+    <div class="eyebrow">MNP NORIKAE NAVI</div>
+    <h1>その乗り換え、<br /><em>本当にお得？</em></h1>
+    <p>
+      月々のスマホ代から、乗り換えの損益を見える化。<br />手数料も割引も含めて、あなたに合う選択を。
+    </p>
+    <div class="trust">
+      <span>✓ 無料・登録不要</span><span>✓ 個人情報の入力不要</span
+      ><span>✓ ブラウザ内で計算</span>
+    </div>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <div class="phone">
+      <span>スマホ代を見直そう</span><strong>¥ ↓</strong
+      ><small>わかる。選べる。</small>
+    </div>
+    <span class="spark">✦</span>
+  </div>
+</section>
+<div class="notice">
+  <b>料金確認日：2026年10月19日</b
+  >　公式情報で確認できたプランのみ比較します。ahamoの12月料金改定を反映。未確認・確認期限切れのプランはランキングに含めません。<a
+    href="/data-status/"
+    >確認状況を見る →</a
+  >
+</div>
+<div class="workspace">
+  <section class="panel">
+    <div class="panel-head">
+      <span class="step">01</span>
+      <h2>いまのスマホ代を入力</h2>
+    </div>
+    <form id="calculator" class="form-body">
+      <label class="field"
+        >現在のキャリア
+        <div class="control">
+          <select name="carrier" id="carrier" required>
+            <option value="">選択してください</option>
+            {{CARRIER_OPTIONS}}
+          </select>
+        </div></label
+      >
+      <label class="field"
+        >月額料金（税込・端末代を除く）
+        <div class="control">
+          <input
+            class="has-unit"
+            name="monthly"
+            type="number"
+            inputmode="decimal"
+            min="0"
+            max="1000000"
+            step="0.01"
+            placeholder="例：6,000"
+            required
+          /><span class="unit">円/月</span>
+        </div>
+        <small
+          >現在の割引を適用した請求額を入力。詳細で期限付き割引を設定する場合は割引前の額にしてください。</small
+        ></label
+      >
+      <label class="field"
+        >毎月のデータ使用量
+        <div class="control">
+          <input
+            class="has-unit"
+            name="dataGB"
+            type="number"
+            inputmode="decimal"
+            min="0"
+            max="1000"
+            step="0.1"
+            placeholder="例：10"
+            required
+          /><span class="unit">GB</span>
+        </div></label
+      >
+      <div class="two">
+        <label class="field"
+          >月の通話時間
+          <div class="control">
+            <input
+              class="has-unit"
+              name="callMinutes"
+              type="number"
+              min="0"
+              max="100000"
+              step="0.5"
+              value="0"
+              required
+            /><span class="unit">分</span>
+          </div></label
+        ><label class="field"
+          >月の通話回数
+          <div class="control">
+            <input
+              class="has-unit"
+              name="calls"
+              type="number"
+              min="0"
+              max="10000"
+              step="1"
+              value="0"
+              required
+            /><span class="unit">回</span>
+          </div></label
+        >
+      </div>
+      <p class="small">
+        通話は1回の長さが均等と仮定した概算です。1回ごとの通話時間で実際の請求は変わります。SMS・国際・0570等の対象外通話は含みません。
+      </p>
+      <details>
+        <summary>詳細条件を設定する ＋</summary>
+        <label class="field"
+          >現在の料金プラン（任意）
+          <div class="control">
+            <input
+              name="currentPlan"
+              maxlength="80"
+              placeholder="契約内容の整理用・判定には未使用"
+            /></div
+        ></label>
+        <label class="field"
+          >現在の契約開始日（任意）
+          <div class="control"><input type="date" name="contractStart" /></div>
+          <small
+            >開始日のみでは解約料を断定できません。旧プラン・利用実態等を公式窓口で確認してください。</small
+          ></label
+        >
+        <label class="field"
+          >現在の通話オプション（任意）
+          <div class="control">
+            <input
+              name="currentCallOption"
+              maxlength="80"
+              placeholder="月額料金に含めて入力"
+            /></div
+        ></label>
+        <label class="field"
+          >乗り換え予定月
+          <div class="control">
+            <input name="startMonth" type="month" required />
+          </div>
+          <small
+            >各月1日から満額で比較。日割り・請求締め日・将来の未発表改定は再現しません。</small
+          ></label
+        >
+        <div class="two">
+          <label class="field"
+            >期限付き割引額
+            <div class="control">
+              <input
+                name="discount"
+                type="number"
+                min="0"
+                max="1000000"
+                step="0.01"
+                value="0"
+                required
+              /></div></label
+          ><label class="field"
+            >残り適用月数
+            <div class="control">
+              <input
+                name="discountMonths"
+                type="number"
+                min="0"
+                max="120"
+                value="0"
+                required
+              /></div
+          ></label>
+        </div>
+        <div class="two">
+          <label class="field"
+            >現在契約の値上げ額
+            <div class="control">
+              <input
+                name="futureIncrease"
+                type="number"
+                min="0"
+                max="1000000"
+                step="0.01"
+                value="0"
+                required
+              /></div></label
+          ><label class="field"
+            >何か月後に値上げ
+            <div class="control">
+              <input
+                name="increaseAfter"
+                type="number"
+                min="0"
+                max="120"
+                value="0"
+                required
+              /></div
+          ></label>
+        </div>
+        <small class="small"
+          >例：10月から比較し12月に165円値上げなら「165」「2」。継続側の改定はご自身で確認・入力してください。</small
+        >
+        <div class="two">
+          <label class="field"
+            >端末残債（総額）
+            <div class="control">
+              <input
+                name="balance"
+                type="number"
+                min="0"
+                max="10000000"
+                step="0.01"
+                value="0"
+                required
+              /></div></label
+          ><label class="field"
+            >残り支払い月数
+            <div class="control">
+              <input
+                name="balanceMonths"
+                type="number"
+                min="0"
+                max="120"
+                value="0"
+                required
+              /></div
+          ></label>
+        </div>
+        <label class="field"
+          >新端末の購入総額
+          <div class="control">
+            <input
+              name="newDevice"
+              type="number"
+              min="0"
+              max="10000000"
+              step="0.01"
+              value="0"
+              required
+            />
+          </div>
+          <small
+            >初月に全額計上。残債は両方の契約に均等計上します。返却プログラム・残価免除は未対応。</small
+          ></label
+        >
+        <label class="field"
+          >旧回線との重複請求等（総額）
+          <div class="control">
+            <input
+              name="overlap"
+              type="number"
+              min="0"
+              max="1000000"
+              step="0.01"
+              value="0"
+              required
+            /></div
+        ></label>
+        <label class="field"
+          >乗り換え後に追加するオプション（月額）
+          <div class="control">
+            <input
+              name="extraMonthly"
+              type="number"
+              min="0"
+              max="1000000"
+              step="0.01"
+              value="0"
+              required
+            />
+          </div>
+          <small
+            >全候補に共通の追加負担。家族回線の割引消失なども必要に応じて入力してください。</small
+          ></label
+        >
+        <fieldset>
+          <legend class="small">確認済みの適用条件だけ選択</legend>
+          <label class="check"
+            ><input
+              type="checkbox"
+              name="conditions"
+              value="rakuten-up-to-four"
+            />楽天モバイル：累計4回線目までの契約</label
+          ><label class="check"
+            ><input
+              type="checkbox"
+              name="conditions"
+              value="rakuten-link"
+            />楽天モバイル：対象の国内通話をRakuten Linkから発信</label
+          ><label class="check"
+            ><input
+              type="checkbox"
+              name="conditions"
+              value="rakuten-family"
+            />楽天モバイル：最強家族割のグループ作成・参加条件を満たす</label
+          ><label class="check"
+            ><input
+              type="checkbox"
+              name="conditions"
+              value="povo-up-to-five"
+            />povo：過去1年の契約が今回を含め5回線以内</label
+          >
+        </fieldset>
+      </details>
+      <label class="field" style="margin-top: 20px"
+        >現在の契約の解約費用（税込）
+        <div class="control">
+          <input
+            name="exitFee"
+            type="number"
+            min="0"
+            max="1000000"
+            step="0.01"
+            placeholder="公式の契約条件で確認した金額"
+            required
+          /></div
+      ></label>
+      <label class="check"
+        ><input
+          type="checkbox"
+          name="exitConfirmed"
+          required
+        />解約費用を契約条件で確認しました。0円の場合も確認済みです。</label
+      >
+      <div id="form-error" class="error" role="alert"></div>
+      <button class="primary" type="submit">乗り換えでいくら変わる？　→</button>
+      <p class="privacy-note">
+        入力内容はサーバーへ送信・保存しません。<br />料金は概算です。申込前に必ず公式情報をご確認ください。
+      </p>
+    </form>
+  </section>
+  <section id="results" aria-labelledby="results-title">
+    <div class="results-heading">
+      <h2 id="results-title">あなたの乗り換え比較</h2>
+      <span class="badge">広告報酬による順位変更なし</span>
+    </div>
+    <div class="periods" role="group" aria-label="ランキングの比較期間">
+      <button type="button" data-period="6" aria-pressed="false">6か月</button
+      ><button type="button" data-period="12" aria-pressed="true">12か月</button
+      ><button type="button" data-period="24" aria-pressed="false">
+        24か月
+      </button>
+    </div>
+    <p class="horizon-note">
+      選んだ期間の現金支出が少ない順。ポイントは別に表示します。
+    </p>
+    <div id="result-status" role="status" aria-live="polite"></div>
+    <div id="rankings">
+      <div class="empty">
+        <div class="empty-icon">⇄</div>
+        <h3>乗り換えの「答え」を、数字で。</h3>
+        <p>
+          いまの月額料金と使い方を入力すると、<br />節約額・初期費用・損益分岐点がわかります。
+        </p>
+      </div>
+    </div>
+    <div id="breakdown" hidden class="panel" tabindex="-1"></div>
+    <div id="excluded"></div>
+    <aside class="ad" aria-label="広告掲載用スペース">
+      <div>
+        <span>ADVERTISEMENT</span
+        >広告掲載スペース<br />現在、広告は配信していません
+      </div>
+    </aside>
+    <p class="small">
+      比較対象は確認済みの代表プランです。全プラン・全通話オプションを網羅していません。法定付加料金（ユニバーサルサービス料等）、SMS、対象外通話、セット回線・カードの費用は比較範囲外で、総請求額を保証しません。確認できないプランは0円扱いせず除外します。損益分岐点は24か月内で再び赤字にならない最初の月です。
+    </p>
+  </section>
+</div>
+<section class="section">
+  <h2>納得して選ぶための、3つの約束</h2>
+  <div class="features">
+    <article class="feature">
+      <i>01 —</i>
+      <h3>「月額」だけで比べない</h3>
+      <p>
+        初期費用や割引終了を考慮。6・12・24か月の支出を比べて、長く使ったときの差を確かめられます。
+      </p>
+    </article>
+    <article class="feature">
+      <i>02 —</i>
+      <h3>ポイントは、現金と分ける</h3>
+      <p>
+        「最大○万円相当」をそのまま節約額にしません。条件が確認できない特典は加算しません。
+      </p>
+    </article>
+    <article class="feature">
+      <i>03 —</i>
+      <h3>確かめた情報だけを使う</h3>
+      <p>
+        公式サイトを一次情報に、確認日を明示。変更検知後も、内容を確認してから料金を更新します。
+      </p>
+    </article>
+  </div>
+</section>
+<section class="section" id="carriers">
+  <h2>キャリア別の料金と確認状況</h2>
+  <div class="data-list">{{CARRIER_LINKS}}</div>
+</section>
+<section class="section">
+  <h2>乗り換え前に知っておきたいこと</h2>
+  <div class="features">
+    <article class="feature">
+      <h3><a href="/guides/costs/">MNPで見落としやすい費用</a></h3>
+      <p>
+        手数料、解約月の請求、端末残債。「乗り換えたら消える費用」と思い込まないために。
+      </p>
+    </article>
+    <article class="feature">
+      <h3><a href="/guides/benefits/">ポイント還元の正しい比べ方</a></h3>
+      <p>
+        受取条件と受取時期、利用期限。金額だけではわからない違いを整理します。
+      </p>
+    </article>
+    <article class="feature">
+      <h3><a href="/methodology/">この計算のしくみ</a></h3>
+      <p>順位の決まり方、対象に含める費用、概算の範囲を公開しています。</p>
+    </article>
+  </div>
+</section>

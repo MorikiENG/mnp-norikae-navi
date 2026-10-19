@@ -1,0 +1,857 @@
+{
+  "schemaVersion": 1,
+  "researchDate": "2026-10-19",
+  "carriers": [
+    {
+      "id": "docomo",
+      "name": "NTTドコモ",
+      "url": "https://www.docomo.ne.jp/charge/docomo_mini/",
+      "note": "新規受付は2026年11月30日まで。mini2は別プランとして確認が必要。"
+    },
+    {
+      "id": "au",
+      "name": "au",
+      "url": "https://www.au.com/mobile/charge/smartphone/plan/auvaluelink/",
+      "note": "オンライン申込の通常料金。200GB超で速度制限、テザリング60GBまで。"
+    },
+    {
+      "id": "softbank",
+      "name": "ソフトバンク",
+      "url": "https://www.softbank.jp/mobile/price_plan/data/teigaku-museigen/",
+      "note": "オンライン・自宅受取の通常料金。直近30日300GB超で速度制御。"
+    },
+    {
+      "id": "rakuten",
+      "name": "楽天モバイル",
+      "url": "https://network.mobile.rakuten.co.jp/fee/saikyo-plan/detail/",
+      "note": "累計4回線目までの通常申込。Rakuten Link対象外通話は別料金。"
+    },
+    {
+      "id": "ahamo",
+      "name": "ahamo",
+      "url": "https://ahamo.com/plan/",
+      "note": "2026年12月1日改定を反映。40GB超は上限設定オプションの解除が必要な場合あり。"
+    },
+    {
+      "id": "povo",
+      "name": "povo",
+      "url": "https://povo.jp/topping-list/detail/30G_subscription/",
+      "note": "月単位サブスク30GBのみ比較。30日トッピングを月額と同一視しません。"
+    },
+    {
+      "id": "linemo",
+      "name": "LINEMO",
+      "url": "https://www.linemo.jp/plan/index_a.html",
+      "note": "通常料金と通常事務手数料を採用。短期キャンペーンは含めません。"
+    },
+    {
+      "id": "uq",
+      "name": "UQ mobile",
+      "url": "https://www.uqwimax.jp/mobile/plan/komikomi-pv/",
+      "note": "35GB超で最大1Mbps、50GB超で最大128kbps。オンライン申込。"
+    },
+    {
+      "id": "ymobile",
+      "name": "ワイモバイル",
+      "url": "https://www.ymobile.jp/plan/",
+      "note": "料金改定・割引・手数料の一式を確認中。ランキング対象外。"
+    },
+    {
+      "id": "iijmio",
+      "name": "IIJmio",
+      "url": "https://www.iijmio.jp/gigaplan/",
+      "note": "音声SIM・タイプA、5GBの通常料金のみ。SIM発行料446.6円を含む。"
+    },
+    {
+      "id": "mineo",
+      "name": "mineo",
+      "url": "https://mineo.jp/price/mypita/",
+      "note": "音声付きマイピタ・物理SIM。高速容量超過後は最大200kbps。"
+    },
+    {
+      "id": "nihon",
+      "name": "日本通信SIM",
+      "url": "https://www.nihontsushin.com/plan/planminna.html",
+      "note": "標準電話アプリ、無料通話は5分/回を選択する想定。容量超過後は低速度。"
+    }
+  ],
+  "plans": [
+    {
+      "id": "docomo-mini4",
+      "carrierId": "docomo",
+      "name": "ドコモ mini 4GB",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 0,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        },
+        {
+          "name": "5分無料",
+          "monthly": 880,
+          "freePerCall": 5
+        },
+        {
+          "name": "かけ放題",
+          "monthly": 1980,
+          "freePerCall": 0,
+          "unlimited": true
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 4,
+              "yen": 2750
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://www.docomo.ne.jp/charge/docomo_mini/",
+        "https://www.docomo.ne.jp/support/subscribe/"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "新規受付は2026年11月30日まで。mini2は別プランとして確認が必要。",
+      "availableUntil": "2026-11-30"
+    },
+    {
+      "id": "docomo-mini10",
+      "carrierId": "docomo",
+      "name": "ドコモ mini 10GB",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 0,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        },
+        {
+          "name": "5分無料",
+          "monthly": 880,
+          "freePerCall": 5
+        },
+        {
+          "name": "かけ放題",
+          "monthly": 1980,
+          "freePerCall": 0,
+          "unlimited": true
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 10,
+              "yen": 3850
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://www.docomo.ne.jp/charge/docomo_mini/",
+        "https://www.docomo.ne.jp/support/subscribe/"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "新規受付は2026年11月30日まで。mini2は別プランとして確認が必要。",
+      "availableUntil": "2026-11-30"
+    },
+    {
+      "id": "au-valuelink",
+      "carrierId": "au",
+      "name": "auバリューリンクプラン",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3850,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        },
+        {
+          "name": "5分無料",
+          "monthly": 880,
+          "freePerCall": 5
+        },
+        {
+          "name": "かけ放題",
+          "monthly": 1980,
+          "freePerCall": 0,
+          "unlimited": true
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 1,
+              "yen": 6358
+            },
+            {
+              "upToGB": null,
+              "yen": 8008
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://www.au.com/mobile/charge/smartphone/plan/auvaluelink/",
+        "https://www.au.com/support/faq/details/00/0000/000003/pg00000330/"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "オンライン申込の通常料金。200GB超で速度制限、テザリング60GBまで。"
+    },
+    {
+      "id": "softbank-teigaku",
+      "carrierId": "softbank",
+      "name": "テイガク無制限",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3850,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": null,
+              "yen": 8008
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://www.softbank.jp/mobile/price_plan/data/teigaku-museigen/",
+        "https://www.softbank.jp/support/faq/view/20471"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "オンライン・自宅受取の通常料金。直近30日300GB超で速度制御。"
+    },
+    {
+      "id": "rakuten-saikyo",
+      "carrierId": "rakuten",
+      "name": "Rakuten最強プラン",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 0,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        },
+        {
+          "name": "Rakuten Link対象通話",
+          "monthly": 0,
+          "freePerCall": 0,
+          "unlimited": true,
+          "requires": "rakuten-link"
+        },
+        {
+          "name": "15分標準通話",
+          "monthly": 1100,
+          "freePerCall": 15
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 3,
+              "yen": 1078
+            },
+            {
+              "upToGB": 20,
+              "yen": 2178
+            },
+            {
+              "upToGB": null,
+              "yen": 3278
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://network.mobile.rakuten.co.jp/fee/saikyo-plan/detail/",
+        "https://network.mobile.rakuten.co.jp/guide/commission/"
+      ],
+      "discounts": [
+        {
+          "id": "rakuten-family",
+          "label": "最強家族割のグループ参加条件を満たす",
+          "yen": 110
+        }
+      ],
+      "benefits": [],
+      "note": "累計4回線目までの通常申込。Rakuten Link対象外通話は別料金。",
+      "initialRequires": "rakuten-up-to-four"
+    },
+    {
+      "id": "ahamo",
+      "carrierId": "ahamo",
+      "name": "ahamo",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 0,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "5分無料",
+          "monthly": 0,
+          "freePerCall": 5
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 30,
+              "yen": 2970
+            },
+            {
+              "upToGB": 110,
+              "yen": 4950
+            }
+          ],
+          "until": "2026-11-30"
+        },
+        {
+          "from": "2026-12-01",
+          "tiers": [
+            {
+              "upToGB": 40,
+              "yen": 3135
+            },
+            {
+              "upToGB": 60,
+              "yen": 4125
+            },
+            {
+              "upToGB": 120,
+              "yen": 5115
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://ahamo.com/plan/",
+        "https://ahamo.com/new-ahamo/index.html"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "2026年12月1日改定を反映。40GB超は上限設定オプションの解除が必要な場合あり。"
+    },
+    {
+      "id": "povo-sub30",
+      "carrierId": "povo",
+      "name": "povo2.0 サブスク30GB",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 0,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 30,
+              "yen": 2780
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://povo.jp/topping-list/detail/30G_subscription/",
+        "https://povo.jp/spec/detail/"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "月単位サブスク30GBのみ比較。30日トッピングを月額と同一視しません。",
+      "initialRequires": "povo-up-to-five"
+    },
+    {
+      "id": "linemo-best",
+      "carrierId": "linemo",
+      "name": "LINEMOベストプラン",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3850,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 3,
+              "yen": 990
+            },
+            {
+              "upToGB": 10,
+              "yen": 2090
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://www.linemo.jp/plan/index_a.html",
+        "https://www.linemo.jp/support/faq/view/27192"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "3GBまで990円、10GBまで2,090円。10GB超で最大300kbps、15GB超で最大128kbps。期間限定特典は不算入。"
+    },
+    {
+      "id": "linemo-v",
+      "carrierId": "linemo",
+      "name": "LINEMOベストプランV",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3850,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "5分無料",
+          "monthly": 0,
+          "freePerCall": 5
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 30,
+              "yen": 2970
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://www.linemo.jp/plan/index_a.html",
+        "https://www.linemo.jp/support/faq/view/27192"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "30GBまで。超過後最大1Mbps、45GB超で最大128kbps。対象外通話は別料金。"
+    },
+    {
+      "id": "uq-komikomi",
+      "carrierId": "uq",
+      "name": "コミコミプランバリュー",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3850,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "10分無料",
+          "monthly": 0,
+          "freePerCall": 10
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 35,
+              "yen": 3828
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://www.uqwimax.jp/mobile/plan/komikomi-pv/",
+        "https://www.au.com/support/faq/details/00/0000/000003/pg00000330/"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "35GB超で最大1Mbps、50GB超で最大128kbps。オンライン申込。"
+    },
+    {
+      "id": "ymobile-review",
+      "carrierId": "ymobile",
+      "name": "シンプル3（確認中）",
+      "status": "pending",
+      "checkedAt": null,
+      "validThrough": null,
+      "initialFee": null,
+      "callPer30sec": null,
+      "callOptions": [],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": []
+        }
+      ],
+      "sources": [
+        "https://www.ymobile.jp/plan/"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "料金改定・割引・手数料の一式を確認中。ランキング対象外。"
+    },
+    {
+      "id": "iijmio-5",
+      "carrierId": "iijmio",
+      "name": "ギガプラン 5GB 音声SIM タイプA",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3746.6,
+      "callPer30sec": 11,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        },
+        {
+          "name": "通話定額5分＋",
+          "monthly": 500,
+          "freePerCall": 5
+        },
+        {
+          "name": "通話定額10分＋",
+          "monthly": 700,
+          "freePerCall": 10
+        },
+        {
+          "name": "かけ放題＋",
+          "monthly": 1400,
+          "freePerCall": 0,
+          "unlimited": true
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 5,
+              "yen": 950
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://www.iijmio.jp/gigaplan/",
+        "https://www.iijmio.jp/hdc/spec/"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "音声SIM・タイプA、5GBの通常料金のみ。SIM発行料446.6円を含む。"
+    },
+    {
+      "id": "mineo-3",
+      "carrierId": "mineo",
+      "name": "マイピタ 3GB デュアルタイプ",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3740,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 3,
+              "yen": 1298
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://mineo.jp/price/mypita/",
+        "https://mineo.jp/apply/simonly-flow/",
+        "https://support.mineo.jp/usqa/service/option/callservice/40000691_11087.html"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "音声付きマイピタ・物理SIM。容量超過後最大200kbps。標準電話アプリの従量通話のみ比較（mineoでんわ等の追加オプションは未収録）。"
+    },
+    {
+      "id": "mineo-7",
+      "carrierId": "mineo",
+      "name": "マイピタ 7GB デュアルタイプ",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3740,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 7,
+              "yen": 1518
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://mineo.jp/price/mypita/",
+        "https://mineo.jp/apply/simonly-flow/",
+        "https://support.mineo.jp/usqa/service/option/callservice/40000691_11087.html"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "音声付きマイピタ・物理SIM。容量超過後最大200kbps。標準電話アプリの従量通話のみ比較（mineoでんわ等の追加オプションは未収録）。"
+    },
+    {
+      "id": "mineo-15",
+      "carrierId": "mineo",
+      "name": "マイピタ 15GB デュアルタイプ",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3740,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 15,
+              "yen": 1958
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://mineo.jp/price/mypita/",
+        "https://mineo.jp/apply/simonly-flow/",
+        "https://support.mineo.jp/usqa/service/option/callservice/40000691_11087.html"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "音声付きマイピタ・物理SIM。容量超過後最大200kbps。標準電話アプリの従量通話のみ比較（mineoでんわ等の追加オプションは未収録）。"
+    },
+    {
+      "id": "mineo-30",
+      "carrierId": "mineo",
+      "name": "マイピタ 30GB デュアルタイプ",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3740,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 30,
+              "yen": 2178
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://mineo.jp/price/mypita/",
+        "https://mineo.jp/apply/simonly-flow/",
+        "https://support.mineo.jp/usqa/service/option/callservice/40000691_11087.html"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "音声付きマイピタ・物理SIM。容量超過後最大200kbps。標準電話アプリの従量通話のみ比較（mineoでんわ等の追加オプションは未収録）。"
+    },
+    {
+      "id": "mineo-50",
+      "carrierId": "mineo",
+      "name": "マイピタ 50GB デュアルタイプ",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3740,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 50,
+              "yen": 2948
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://mineo.jp/price/mypita/",
+        "https://mineo.jp/apply/simonly-flow/",
+        "https://support.mineo.jp/usqa/service/option/callservice/40000691_11087.html"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "音声付きマイピタ・物理SIM。容量超過後最大200kbps。標準電話アプリの従量通話のみ比較（mineoでんわ等の追加オプションは未収録）。"
+    },
+    {
+      "id": "nihon-simple",
+      "carrierId": "nihon",
+      "name": "合理的シンプル290プラン（1GBまで）",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3300,
+      "callPer30sec": 11,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 1,
+              "yen": 290
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://www.nihontsushin.com/plan/plansimple.html"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "1GBまでの比較。追加データは1GBあたり220円ですが、この比較では追加購入を含めません。上限超過後は低速度。"
+    },
+    {
+      "id": "nihon-minna",
+      "carrierId": "nihon",
+      "name": "合理的みんなのプラン",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3300,
+      "callPer30sec": 11,
+      "callOptions": [
+        {
+          "name": "5分無料（申込時に選択）",
+          "monthly": 0,
+          "freePerCall": 5
+        },
+        {
+          "name": "70分無料（選択制）",
+          "monthly": 0,
+          "freePerCall": 0,
+          "freeTotal": 70
+        },
+        {
+          "name": "かけ放題",
+          "monthly": 1600,
+          "freePerCall": 0,
+          "unlimited": true
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 20,
+              "yen": 1390
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://www.nihontsushin.com/plan/planminna.html"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "標準電話アプリ、無料通話は5分/回を選択する想定。容量超過後は低速度。"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+research/*.txt
+research/*.html
+.env*
+!.env.example
+
+__pycache__/
+*.pyc

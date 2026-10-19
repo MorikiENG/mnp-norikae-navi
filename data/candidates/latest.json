@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-19T13:58:59.249994+00:00",
+  "approved": false,
+  "reviewDue": [],
+  "instruction": "Observed strings are not tariffs. Review official fees, capacity, dates, eligibility, and taxes before editing catalog.json.",
+  "observations": [
+    {
+      "url": "https://www.linemo.jp/plan/index_a.html",
+      "state": "unavailable",
+      "error": "HTTP Error 403: Forbidden",
+      "previousSha256": null,
+      "change": "verification-needed"
+    },
+    {
+      "url": "https://www.linemo.jp/support/faq/view/27192",
+      "state": "unavailable",
+      "error": "HTTP Error 403: Forbidden",
+      "previousSha256": null,
+      "change": "verification-needed"
+    },
+    {
+      "url": "https://www.ymobile.jp/plan/",
+      "state": "unavailable",
+      "error": "HTTP Error 403: Forbidden",
+      "previousSha256": null,
+      "change": "verification-needed"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+name: Official tariff change candidates
+on:
+  schedule:
+    - cron: '17 21 * * 0'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: tariff-watch
+  cancel-in-progress: false
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+      - run: npm test && npm run build
+      - name: Observe official sources without editing approved catalog
+        run: npm run check:updates
+      - name: Propose changes for human review
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if [ -z "$(git status --porcelain -- data/candidates research/baseline.json)" ]; then
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git ls-remote --exit-code --heads origin bot/tariff-candidates > /dev/null; then
+            git fetch origin bot/tariff-candidates:refs/remotes/origin/bot/tariff-candidates
+          fi
+          git checkout -B bot/tariff-candidates
+          git add data/candidates research/baseline.json
+          git commit -m 'chore: propose official-source tariff observations'
+          git push --force-with-lease origin bot/tariff-candidates
+          cat > /tmp/tariff-pr.md <<'BODY'
+          公式ページの変更または取得失敗を検知しました。料金データ本体は変更していません。
+
+          `data/candidates/latest.json` の参照元URL・観測値・取得状態を確認してください。金額の文字列はプラン料金ではなく、キャンペーン・端末代等を含む可能性があります。
+
+          - [ ] 公式一次情報で通常料金、容量、通話、手数料を確認
+          - [ ] 税込・適用日・終了日・対象条件・予定改定を確認
+          - [ ] 必要な場合のみ catalog.json を別の確認済み変更として編集
+          - [ ] checkedAt / validThrough と docs/data-review.md の確認記録を更新
+          - [ ] テスト・本番公開前検証を実施
+
+          このPRのマージだけで確認済み料金は更新されません。自動マージは禁止です。
+          BODY
+          if [ -n "$(gh pr list --head bot/tariff-candidates --state open --json number --jq '.[0].number // empty')" ]; then
+            gh pr edit bot/tariff-candidates --body-file /tmp/tariff-pr.md
+          else
+            gh pr create --base main --head bot/tariff-candidates --title '公式料金情報の変更候補（要確認）' --body-file /tmp/tariff-pr.md
+          fi
