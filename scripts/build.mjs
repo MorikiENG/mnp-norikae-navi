@@ -178,6 +178,8 @@ await page(
   `<h1>ページが見つかりません</h1><p><a href="/">トップページへ戻る</a></p>`,
   { index: false },
 );
+await page('/diagnostics/', '配信設定の確認', 'ブラウザ内で配信ヘッダーと検索設定を確認します。', `<h1>配信設定の確認</h1><p>このサイトの公開情報をブラウザ内で読み取ります。診断結果を外部に送信・保存しません。</p><button type="button" id="diagnostic-run" class="primary">再確認する</button><pre id="diagnostic-output" role="status" style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.8"></pre><p>結果をコピーするか、画面を共有して確認に使えます。</p><script type="module" src="/diagnostics.mjs"></script>`, { index: false });
+await cp('src/diagnostics.mjs', 'dist/diagnostics.mjs');
 await cp('dist/404/index.html', 'dist/404.html');
 for (const file of ['app.mjs', 'engine.mjs', 'style.css'])
   await cp(`src/${file}`, `dist/${file}`);

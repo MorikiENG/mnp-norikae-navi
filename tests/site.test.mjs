@@ -89,3 +89,10 @@ test('homepage includes the operator-provided Google verification tag in its hea
   const head = (await readFile('dist/index.html', 'utf8')).split('</head>')[0];
   assert.match(head, /<meta name="google-site-verification" content="eaIJri9lcP0T4RwPPBHuA5Ff4wpBPKTIlGUgFuHhc6U">/);
 });
+
+test('delivery diagnostics stays noindex and its script is included', async () => {
+ const html = await readFile('dist/diagnostics/index.html', 'utf8');
+ assert.match(html, /noindex,nofollow/);
+ assert.match(html, /src="\/diagnostics.mjs"/);
+ await access('dist/diagnostics.mjs');
+});
