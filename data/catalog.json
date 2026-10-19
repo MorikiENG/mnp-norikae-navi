@@ -54,7 +54,7 @@
       "id": "ymobile",
       "name": "ワイモバイル",
       "url": "https://www.ymobile.jp/plan/",
-      "note": "料金改定・割引・手数料の一式を確認中。ランキング対象外。"
+      "note": "シンプル3 S/M/Lの割引前通常料金・オンライン申込を確認。Lは1回10分以内の国内通話無料。セット割・有料通話オプション・特典は不算入。"
     },
     {
       "id": "iijmio",
@@ -520,29 +520,6 @@
       "note": "35GB超で最大1Mbps、50GB超で最大128kbps。オンライン申込。"
     },
     {
-      "id": "ymobile-review",
-      "carrierId": "ymobile",
-      "name": "シンプル3（確認中）",
-      "status": "pending",
-      "checkedAt": null,
-      "validThrough": null,
-      "initialFee": null,
-      "callPer30sec": null,
-      "callOptions": [],
-      "prices": [
-        {
-          "from": "2026-10-01",
-          "tiers": []
-        }
-      ],
-      "sources": [
-        "https://www.ymobile.jp/plan/"
-      ],
-      "discounts": [],
-      "benefits": [],
-      "note": "料金改定・割引・手数料の一式を確認中。ランキング対象外。"
-    },
-    {
       "id": "iijmio-5",
       "carrierId": "iijmio",
       "name": "ギガプラン 5GB 音声SIM タイプA",
@@ -852,6 +829,114 @@
       "discounts": [],
       "benefits": [],
       "note": "標準電話アプリ、無料通話は5分/回を選択する想定。容量超過後は低速度。"
+    },
+    {
+      "id": "ymobile-simple3-s",
+      "carrierId": "ymobile",
+      "name": "シンプル3 S",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3850,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 5,
+              "yen": 3278
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://www.ymobile.jp/plan/",
+        "https://www.ymobile.jp/plan/commission/"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "2026年10月に公式画面と利用者提供の注意事項で確認した割引前通常料金。オンライン申込。5GB超で最大300kbps、低速通信でさらに2.5GBを超えると最大128kbps。契約月は日割り、解約月は満額ですが、この比較は月単位の満額です。国際・衛星・0570・104等の対象外通話、SMS、法定付加料金は別費用。無料通話以外の有料通話オプション、カード・固定回線セット割、特典は未収録。回線提供開始月から12か月以内の解約は本資料ではS/M858円・L1,100円の解除料が示されていますが、契約時期等により条件が異なるため、現在契約の解約費用は公式条件で確認してください。",
+      "verificationMethod": "official-page screenshots and notice text provided by operator"
+    },
+    {
+      "id": "ymobile-simple3-m",
+      "carrierId": "ymobile",
+      "name": "シンプル3 M",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3850,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "従量通話",
+          "monthly": 0,
+          "freePerCall": 0
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 30,
+              "yen": 4378
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://www.ymobile.jp/plan/",
+        "https://www.ymobile.jp/plan/commission/"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "2026年10月に公式画面と利用者提供の注意事項で確認した割引前通常料金。オンライン申込。30GB超で最大1Mbps、低速通信でさらに15GBを超えると最大128kbps。契約月は日割り、解約月は満額ですが、この比較は月単位の満額です。国際・衛星・0570・104等の対象外通話、SMS、法定付加料金は別費用。無料通話以外の有料通話オプション、カード・固定回線セット割、特典は未収録。回線提供開始月から12か月以内の解約は本資料ではS/M858円・L1,100円の解除料が示されていますが、契約時期等により条件が異なるため、現在契約の解約費用は公式条件で確認してください。",
+      "verificationMethod": "official-page screenshots and notice text provided by operator"
+    },
+    {
+      "id": "ymobile-simple3-l",
+      "carrierId": "ymobile",
+      "name": "シンプル3 L",
+      "status": "verified",
+      "checkedAt": "2026-10-19",
+      "validThrough": "2026-11-18",
+      "initialFee": 3850,
+      "callPer30sec": 22,
+      "callOptions": [
+        {
+          "name": "10分以内国内通話無料",
+          "monthly": 0,
+          "freePerCall": 10
+        }
+      ],
+      "prices": [
+        {
+          "from": "2026-10-01",
+          "tiers": [
+            {
+              "upToGB": 35,
+              "yen": 5478
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "https://www.ymobile.jp/plan/",
+        "https://www.ymobile.jp/plan/commission/"
+      ],
+      "discounts": [],
+      "benefits": [],
+      "note": "2026年10月に公式画面と利用者提供の注意事項で確認した割引前通常料金。オンライン申込。35GB超で最大1Mbps、低速通信でさらに17.5GBを超えると最大128kbps。契約月は日割り、解約月は満額ですが、この比較は月単位の満額です。国際・衛星・0570・104等の対象外通話、SMS、法定付加料金は別費用。無料通話以外の有料通話オプション、カード・固定回線セット割、特典は未収録。回線提供開始月から12か月以内の解約は本資料ではS/M858円・L1,100円の解除料が示されていますが、契約時期等により条件が異なるため、現在契約の解約費用は公式条件で確認してください。",
+      "verificationMethod": "official-page screenshots and notice text provided by operator"
     }
   ]
 }

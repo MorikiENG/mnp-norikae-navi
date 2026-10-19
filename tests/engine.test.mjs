@@ -107,7 +107,9 @@ test('unknown and invalid amounts never become zero', () => {
   );
 });
 test('pending and expired prices excluded; exact expiry day valid', () => {
-  assert.throws(() => calculate(plan('ymobile-review'), base));
+  assert.throws(() =>
+    calculate({ ...plan('nihon-minna'), status: 'pending' }, base),
+  );
   assert.throws(() => calculate(plan('nihon-minna'), base, 24, '2026-11-19'));
   assert.doesNotThrow(() =>
     calculate(plan('nihon-minna'), base, 24, '2026-11-18'),
@@ -303,3 +305,35 @@ test('same-month contract date is valid for monthly simulation', () =>
   assert.doesNotThrow(() =>
     calculate(plan('nihon-minna'), { ...base, contractStart: '2026-10-10' }),
   ));
+
+test('Ymobile standard prices and L included ten-minute calls match official evidence', () => {
+  const s = plan('ymobile-simple3-s'),
+    m = plan('ymobile-simple3-m'),
+    l = plan('ymobile-simple3-l');
+  const i = { ...base, dataGB: 5 };
+  assert.equal(monthlyCharge(s, i, 0).yen, 3278);
+  assert.equal(monthlyCharge(m, { ...i, dataGB: 30 }, 0).yen, 4378);
+  assert.equal(
+    monthlyCharge(l, { ...i, dataGB: 35, callMinutes: 100, calls: 10 }, 0).yen,
+    5478,
+  );
+  assert.equal(
+    monthlyCharge(l, { ...i, callMinutes: 101, calls: 10 }, 0).yen,
+    5698,
+  );
+  assert.equal(
+    monthlyCharge(s, { ...i, callMinutes: 1, calls: 1 }, 0).yen,
+    3322,
+  );
+  assert.throws(() => monthlyCharge(s, { ...i, dataGB: 5.1 }, 0));
+  assert.throws(() => monthlyCharge(m, { ...i, dataGB: 30.1 }, 0));
+  assert.throws(() => monthlyCharge(l, { ...i, dataGB: 35.1 }, 0));
+});
+
+test('Ymobile twelve-month costs include online fee and exclude conditional discounts', () => {
+  const r = calculate(plan('ymobile-simple3-s'), { ...base, dataGB: 5 });
+  assert.equal(r.initial, 3850);
+  assert.equal(r.series[11].switched, 43186);
+  assert.equal(r.series[11].saving, 28814);
+  assert.equal(r.series[11].points, 0);
+});

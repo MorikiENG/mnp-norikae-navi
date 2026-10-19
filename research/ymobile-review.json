@@ -2,7 +2,7 @@
   "sourceUrl": "https://www.ymobile.jp/plan/",
   "recordedAt": "2026-10-19",
   "evidenceType": "user-provided screenshot of official page",
-  "status": "partial-review",
+  "status": "verified-for-standard-plan-comparison",
   "plans": [
     {
       "name": "シンプル3 S",
@@ -44,13 +44,11 @@
     "reason": "割引の条件一式と付帯費用は未確認"
   },
   "unconfirmed": [
-    "基本料金の適用開始日と今後の改定",
-    "容量超過後の通信制限条件",
-    "対象外通話の具体的な範囲",
     "有料通話オプションの通常月額と適用条件",
-    "オンラインMNPで契約事務手数料以外に必要なSIM等の初期費用の有無"
+    "セット割・キャンペーンの条件一式",
+    "将来の未発表料金改定"
   ],
-  "note": "画像内の税込基本料金を記録。適用開始日は画像から確定できず、推測しない。全項目を確認するまでcatalog.jsonのpendingを維持。",
+  "note": "提供された公式注意事項は契約事務手数料と別途の法定付加料金等を列挙。オンライン標準契約は3,850円を登録。過去の変更適用日は画像から推測せず、2026年10月の月次比較に使う確認時点料金として収録。",
   "callEvidenceNote": "利用者提供の2枚目の公式料金画面。S/Mは22円/30秒、Lは1回10分以内の国内通話無料、10分超過分は22円/30秒。一部対象外通話あり。有料オプションの通常月額は画像から確定できない。60歳以上のキャンペーン表示から通常料金を逆算しない。",
   "contractAdministrationFee": {
     "sourceUrl": "https://www.ymobile.jp/plan/commission/",
@@ -59,6 +57,24 @@
     "onlineYen": 3850,
     "storeYen": 4950,
     "directFetch": "403; not independently read",
-    "note": "通常の契約事務手数料。無料キャンペーン等は適用しない。SIM発行等に別料金があるかはこの引用だけでは断定しない。"
+    "note": "利用者提供の公式注意事項でもオンライン3,850円を再確認。法定付加料金等は共通の比較対象外として明示。無料キャンペーンは不算入。"
+  },
+  "verificationScope": "2026年10月確認時点の割引前通常基本料、標準通話とLの無料通話、オンライン契約事務手数料、通信制限。法定付加料金等の比較対象外はサイトの共通方針に従う。",
+  "billing": {
+    "activationMonth": "日割り",
+    "cancellationMonth": "満額",
+    "engineModel": "各月1日から満額で比較。日割り非対応。"
+  },
+  "earlyTerminationNotice": {
+    "withinMonths": 12,
+    "sAndMYen": 858,
+    "lYen": 1100,
+    "note": "利用者提供の公式注意事項。契約開始時期などの適用対象は別途契約条件で確認。乗り換え後の継続比較に自動加算しない。"
+  },
+  "dataRestrictions": {
+    "s": "5GB超過後最大300kbps。低速でさらに2.5GB超で最大128kbps。",
+    "m": "30GB超過後最大1Mbps。低速でさらに15GB超で最大128kbps。",
+    "l": "35GB超過後最大1Mbps。低速でさらに17.5GB超で最大128kbps。",
+    "dataIncreaseOptionIncluded": false
   }
 }
