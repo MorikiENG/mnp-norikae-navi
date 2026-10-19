@@ -6,6 +6,8 @@
 
 ## 開発
 
+スマートフォンからのクラウド作業・引き継ぎ手順は [docs/cloud-work.md](docs/cloud-work.md) を参照してください。Codespaces用の開発環境設定を同梱しています。
+
 Node.js 24 と Python 3 を使用。ランタイム・ビルドとも外部npmパッケージは不要です。
 
 ```sh

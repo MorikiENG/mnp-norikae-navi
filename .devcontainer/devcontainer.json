@@ -1,0 +1,13 @@
+{
+  "name": "MNPのりかえ Navi",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-24-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": { "version": "3.12" }
+  },
+  "forwardPorts": [4173],
+  "portsAttributes": {
+    "4173": { "label": "サイト確認用", "onAutoForward": "notify" }
+  },
+  "postCreateCommand": "npm run build",
+  "remoteUser": "node"
+}
