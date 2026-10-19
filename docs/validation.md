@@ -64,3 +64,7 @@ CodexからのHTTP取得は依然403/error code:1010のため、同一サイト�
 2026年10月19日、運営者提供の /diagnostics/ のスクリーンショットで次を確認：トップ・robots・build-info・catalogがHTTP200、配信モードが確認版、検索設定がモードと一致、X-Content-Type-Options、X-Frame-Options、Content-Security-Policy、Referrer-Policy、Permissions-Policy、Google所有権確認タグ、確認済み料金の期限、12ブランド/21確認済みプラン、ワイモバイル3プラン反映が全てOK。
 
 これは利用者ブラウザ上の診断画面を根拠とする確認で、CodexのHTTPクライアントからの取得ではない。検索設定とヘッダーは診断で確認した条件の範囲に限る。料金の完全網羅、全ブラウザ・支援技術、広告ブロック時の動作、実広告の検証を完了したという意味ではない。正式公開の承認は未取得。
+
+## 正式公開設定の検証
+
+運営者の明示承認を受け、Cloudflare Pagesのmainだけ承認済みURLで検索許可・canonical・sitemapを生成する設定を追加。本番mainは検索許可、プレビュー/ローカル/承認なしmainはnoindexとなることを一時ディレクトリで確認。Google確認ファイル・タグと広告無効も既存テストで維持。Node42件＋Python6件、48件成功。実配信反映とSearch Consoleのサイトマップ送信は、この検証とは別に確認する。

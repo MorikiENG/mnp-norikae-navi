@@ -1,6 +1,6 @@
 # Cloudflare Pages 公開準備
 
-現状は静的ビルド完成・未デプロイ。本人によるCloudflareログインと、料金・画面検証後の公開判断が必要です。課金やドメイン購入は実施していません。
+確認版の配信・操作・配信診断とSearch Console所有権確認が完了し、2026年10月19日に本人が正式公開を承認。公開先は https://mnp-norikae-navi.pages.dev/ 。以下の初期手順は履歴として残し、現在は末尾の承認済み公開設定を使用します。課金やドメイン購入は実施していません。
 
 ## プレビュー準備
 
@@ -51,3 +51,11 @@ URLにパスや末尾スラッシュを含めない。ビルドはURL・承認�
 ## 実行確認で判明した残作業
 
 GitHub CIは成功。変更検知の手動実行では候補ブランチを作成できたが、GitHub ActionsからのPR作成は設定で拒否された。本人が上記の「Allow GitHub Actions to create and approve pull requests」を有効化した後、tariff-watchを再実行して自動PR作成を確認する。接続済み権限で作成した確認候補PR #1は未マージで残している。
+
+## 承認済み公開設定（現在）
+
+正式公開を本人が承認したため、data/publication.jsonに公開URL・main・承認記録を保存。Cloudflare標準変数CF_PAGES=1かつCF_PAGES_BRANCH=mainの場合だけ、この設定を本番ビルドに使用する。管理画面での3変数追加は不要。明示的なPRODUCTION=falseまたはPUBLICATION_APPROVED=falseが設定されている場合は承認済みの公開へ切り替わらないため、必要なら本番の該当上書きを削除する。プレビューブランチは正式公開モードでビルドできない。
+
+デプロイ後に /diagnostics/ で配信モード「正式公開設定」、検索設定・正式公開URL・サイトマップURL・ヘッダー等のOKを確認する。/robots.txtにはAllow: /とSitemap: https://mnp-norikae-navi.pages.dev/sitemap.xml、トップにはcanonicalを生成する。Googleの所有権タグ・確認ファイルは削除しない。広告設定は変更しない。
+
+Search ConsoleではURLプレフィックス https://mnp-norikae-navi.pages.dev/ のプロパティを選び、サイトマップからsitemap.xmlを送信する。送信完了とGoogleの取得結果を確認する。送信が検索掲載を保証するとは案内しない。Googleアカウントの操作は本人が行う。

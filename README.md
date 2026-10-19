@@ -55,7 +55,7 @@ GitHubの「Allow GitHub Actions to create and approve pull requests」を有効
 
 ## 公開状態
 
-**Cloudflareへのデプロイ・本番公開は未実施です。** 通常ビルドはnoindexで、推測した公開URLは設定しません。リポジトリへのpushだけではサイトは公開されません。
+**2026年10月19日、運営者が正式公開を承認しました。** 公開先は https://mnp-norikae-navi.pages.dev/ 。承認記録と本番ブランチを `data/publication.json` で管理し、Cloudflare Pagesのmainビルドだけ検索許可・canonical・サイトマップを生成します。ローカルとプレビューブランチはnoindexです。本番配信への反映確認とSearch Consoleサイトマップ送信は運営者と確認します。広告は無効のままです。
 
 [docs/deployment.md](docs/deployment.md) にCloudflare Pagesの設定・公開前確認を記載しています。[docs/monetization.md](docs/monetization.md) に広告収益化に必要な作業を記載しています。
 
