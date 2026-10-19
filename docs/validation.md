@@ -68,3 +68,9 @@ CodexからのHTTP取得は依然403/error code:1010のため、同一サイト�
 ## 正式公開設定の検証
 
 運営者の明示承認を受け、Cloudflare Pagesのmainだけ承認済みURLで検索許可・canonical・sitemapを生成する設定を追加。本番mainは検索許可、プレビュー/ローカル/承認なしmainはnoindexとなることを一時ディレクトリで確認。Google確認ファイル・タグと広告無効も既存テストで維持。Node42件＋Python6件、48件成功。実配信反映とSearch Consoleのサイトマップ送信は、この検証とは別に確認する。
+
+## Search Consoleサイトマップ取得失敗の調査（2026年10月20日）
+
+運営者から、MNP・ToolNest・会社HPの3サイトでサイトマップの読み込み失敗があると報告。MNP以外のURLと各Search Consoleの詳細エラーは未確認。MNPに対するCodexのHTTP取得は引き続き403/error code:1010。これをGooglebotも同じ制限で拒否された証拠とは扱わない。
+
+本番生成物のXMLをPython標準ElementTreeで検証し、名前空間・20URL・重複なし・各URLの生成HTML存在・noindexなし・robotsのサイトマップ宣言を確認。配信診断にサイトマップのHTTP・XML構造・Content-Type・リダイレクト・URL件数/ホスト/重複と配信コミットを追加した。Googleからの取得可否はSearch Consoleで公開URLテストの「ページの取得」を確認する必要がある。原因確定前にセキュリティ機能を一律無効化したり、サイトマップを変更すれば解決すると断定したりしない。ToolNestと会社HPは変更しない。

@@ -239,6 +239,11 @@ await writeFile(
     {
       production,
       origin: origin || null,
+      sourceCommit: /^[a-f0-9]{40}$/i.test(
+        process.env.CF_PAGES_COMMIT_SHA || '',
+      )
+        ? process.env.CF_PAGES_COMMIT_SHA
+        : null,
       researchDate: data.researchDate,
       plans: data.plans.length,
     },
