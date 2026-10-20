@@ -64,8 +64,9 @@ const yen = (n) =>
 await rm('dist', { recursive: true, force: true });
 await mkdir('dist', { recursive: true });
 const pages = [];
+const pageTitles = new Map();
 const header = `<a class="skip" href="#main">本文へスキップ</a><header><div class="header-inner"><a class="logo" href="/"><span class="logo-icon" aria-hidden="true">⇄</span>MNPのりかえ <span style="color:var(--brand)">Navi</span></a><nav aria-label="メインメニュー"><a href="/#calculator">損益を計算</a><a href="/data-status/">料金データ</a><a href="/methodology/">計算のしくみ</a></nav></div></header>`;
-const footer = `<footer><div class="wrap"><div class="footer-row"><div><b>MNPのりかえ Navi</b><p>運営：森樹エンジニアリング</p></div><div class="footer-links"><a href="/about/">運営者情報</a><a href="/privacy/">プライバシー</a><a href="/advertising/">広告掲載ポリシー</a><a href="/methodology/">計算のしくみ</a></div></div><p class="small">© 2026 森樹エンジニアリング　｜　各社の商標は各権利者に帰属します。</p></div></footer>`;
+const footer = `<footer><div class="wrap"><div class="footer-row"><div><b>MNPのりかえ Navi</b><p>運営：森樹エンジニアリング</p></div><div class="footer-links"><a href="/sitemap/">サイトマップ</a><a href="/about/">運営者情報</a><a href="/privacy/">プライバシー</a><a href="/advertising/">広告掲載ポリシー</a><a href="/methodology/">計算のしくみ</a></div></div><p class="small">© 2026 森樹エンジニアリング　｜　各社の商標は各権利者に帰属します。</p></div></footer>`;
 async function page(
   path,
   title,
@@ -74,6 +75,9 @@ async function page(
   { home = false, index = true } = {},
 ) {
   const url = origin + path;
+  const breadcrumb = !home && index
+    ? `<nav aria-label="パンくずリスト"><a href="/">ホーム</a> / <span aria-current="page">${esc(title)}</span></nav>`
+    : '';
   const json = {
     '@context': 'https://schema.org',
     '@type': home ? 'WebApplication' : 'WebPage',
@@ -90,14 +94,25 @@ async function page(
         }
       : {}),
   };
-  const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}${home ? '' : ' | MNPのりかえ Navi'}</title><meta name="description" content="${esc(description)}"><meta name="google-site-verification" content="eaIJri9lcP0T4RwPPBHuA5Ff4wpBPKTIlGUgFuHhc6U"><meta name="theme-color" content="#087e74">${!production || !index ? '<meta name="robots" content="noindex,nofollow">' : ''}${origin ? `<link rel="canonical" href="${esc(url)}"><meta property="og:url" content="${esc(url)}">` : ''}<meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:type" content="website"><meta property="og:locale" content="ja_JP"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css"><script type="application/ld+json">${JSON.stringify(json).replace(/</g, '\\u003c')}</script>${home ? '<script type="module" src="/app.mjs"></script>' : ''}</head><body>${header}<main id="main" class="${home ? 'wrap' : 'legal'}">${content}</main>${footer}</body></html>`;
+  // Match the visible navigation; do not invent category pages or review dates.
+  if (origin && !home && index) json.breadcrumb = {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'ホーム', item: origin + '/' },
+      { '@type': 'ListItem', position: 2, name: title, item: url },
+    ],
+  };
+  const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}${home ? '' : ' | MNPのりかえ Navi'}</title><meta name="description" content="${esc(description)}"><meta name="google-site-verification" content="eaIJri9lcP0T4RwPPBHuA5Ff4wpBPKTIlGUgFuHhc6U"><meta name="theme-color" content="#087e74">${!production || !index ? '<meta name="robots" content="noindex,nofollow">' : ''}${origin ? `<link rel="canonical" href="${esc(url)}"><meta property="og:url" content="${esc(url)}">` : ''}<meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:type" content="website"><meta property="og:locale" content="ja_JP"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css"><script type="application/ld+json">${JSON.stringify(json).replace(/</g, '\\u003c')}</script>${home ? '<script type="module" src="/app.mjs"></script>' : ''}</head><body>${header}<main id="main" class="${home ? 'wrap' : 'legal'}">${breadcrumb}${content}</main>${footer}</body></html>`;
   const destination =
     path === '/' ? 'dist/index.html' : `dist${path}index.html`;
   await mkdir(destination.slice(0, destination.lastIndexOf('/')), {
     recursive: true,
   });
   await writeFile(destination, html);
-  if (index) pages.push(path);
+  if (index) {
+    pages.push(path);
+    pageTitles.set(path, title);
+  }
 }
 const links = data.carriers
   .map(
@@ -116,7 +131,7 @@ home = home
   .replace('{{CARRIER_LINKS}}', links);
 await page(
   '/',
-  'MNPのりかえ Navi｜その乗り換え、本当にお得？',
+  'MNP乗り換え損益シミュレーション・料金比較 | MNPのりかえ Navi',
   '携帯電話のMNP乗り換えでいくら変わる？公式確認済み料金と手数料から6・12・24か月の損益を無料比較。会員登録不要、ブラウザ内で計算。',
   home,
   { home: true },
@@ -130,7 +145,7 @@ const content = {
   privacy: [
     'プライバシーポリシー',
     '入力情報の取り扱いと外部通信について。',
-    `<h1>プライバシーポリシー</h1><p>制定日：2026年10月19日<br>運営：森樹エンジニアリング</p><h2>計算に入力する情報</h2><p>氏名・電話番号・メールアドレス・住所は求めません。月額料金、利用量、契約開始日などの入力は、ブラウザ内のメモリで計算に使用します。当サービスのサーバーへ送信せず、Cookieやローカルストレージにも保存しません。再読み込みすると消去されます。CSV保存は端末内の操作です。</p><h2>外部への通信</h2><p>ページと料金データの取得時、ホスティング事業者にIPアドレス等の接続情報が送信されます。確認版はCloudflare Pagesで配信しています。<a href="https://www.cloudflare.com/privacypolicy/">Cloudflareのプライバシーポリシー</a>をご確認ください。公式サイトへのリンクを開くと、リンク先の方針が適用されます。入力条件をURLに付加しません。</p><h2>広告・解析</h2><p>現在、AdSense、アフィリエイト広告、アクセス解析は有効にしていません。第三者広告スクリプトや広告Cookieを読み込みません。導入時には送信先、送信項目、目的、選択方法を明示し、必要な同意管理を実装して本方針を更新します。広告の有無にかかわらず計算機能を利用できます。</p><h2>お問い合わせ</h2><p>窓口：森樹エンジニアリング（<a href="mailto:moriki.engineering@gmail.com">moriki.engineering@gmail.com</a>）。メールでお送りいただいたメールアドレスと本文は、お問い合わせへの対応・ご連絡・料金情報の誤りの確認に使用します。メールはGmailで受信します。計算に入力した内容が自動的に添付・送信されることはありません。電話番号、契約番号、本人確認書類などは送らないでください。<a href="/about/">運営者情報</a>もご確認ください。</p>`,
+    `<h1>プライバシーポリシー</h1><p>制定日：2026年10月19日<br>運営：森樹エンジニアリング</p><h2>計算に入力する情報</h2><p>氏名・電話番号・メールアドレス・住所は求めません。月額料金、利用量、契約開始日などの入力は、ブラウザ内のメモリで計算に使用します。当サービスのサーバーへ送信せず、Cookieやローカルストレージにも保存しません。再読み込みすると消去されます。CSV保存は端末内の操作です。</p><h2>外部への通信</h2><p>ページと料金データの取得時、ホスティング事業者にIPアドレス等の接続情報が送信されます。確認版はCloudflare Pagesで配信しています。<a href="https://www.cloudflare.com/privacypolicy/">Cloudflareのプライバシーポリシー</a>をご確認ください。公式サイトへのリンクを開くと、リンク先の方針が適用されます。入力条件をURLに付加しません。</p><h2>広告・解析</h2><p>現在、AdSense、アフィリエイト広告、アクセス解析は有効にしていません。第三者広告スクリプトや広告Cookieを読み込みません。導入時には送信先、送信項目、目的、選択方法を明示し、必要な同意管理を実装して本方針を更新します。広告の有無にかかわらず計算機能を利用できます。</p><h2>お問い合わせ</h2><p>窓口：森樹エンジニアリング（<a href="mailto:moriki.engineering@gmail.com">moriki.engineering@gmail.com</a>）。メールでお送りいただいたメールアドレスと本文は、お問い合わせへの対応・ご連絡・料金情報の誤りの確認に使用します。メールはGmailで受信します。計算に入力した内容が自動的に添付・送信されることはありません。電話番号、契約番号、本人確認書類などは送らないでください。<a href="/sitemap/">サイトマップ</a><a href="/about/">運営者情報</a>もご確認ください。</p>`,
   ],
   advertising: [
     '広告掲載ポリシー',
@@ -192,7 +207,7 @@ for (const c of data.carriers) {
     `/carriers/${c.id}/`,
     `${c.name}の料金とMNP比較`,
     `${c.name}の確認済み代表プラン・費用・注意事項と公式参照先。`,
-    `<h1>${esc(c.name)}の料金とMNP比較</h1><p>${esc(c.note)}</p><p>全プランではなく、下記の代表プランを比較します。割引前・税込の通常料金が基本です。期間限定特典や未確認の割引を加算しません。通話・通信制限条件は公式情報を確認してください。</p><div class="table-wrap"><table><thead><tr><th>プラン</th><th>状態</th><th>基本料金・容量</th><th>初期費用</th><th>確認日</th></tr></thead><tbody>${rows}</tbody></table></div>${verified.map((p) => `<h2>${esc(p.name)}の確認条件</h2><p>${esc(p.note)}</p><p>国内通常通話：${yen(p.callPer30sec)}/30秒。${p.callOptions.map((o) => `${esc(o.name)}：月額${yen(o.monthly)}`).join('、')}。対象外の発信・SMS等は別費用です。</p>`).join('')}<h2>選ぶ前に確認すること</h2><p>必要な高速データ容量、よく使う場所での通信状況、端末対応、通話オプション、家族割への影響を確認しましょう。新規契約の条件と既存契約の条件が異なることもあります。</p><p><a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">${esc(c.name)}公式の料金情報 ↗</a>（通常リンク）</p>${ads.affiliates
+    `<h1>${esc(c.name)}の料金とMNP比較</h1><p>${esc(c.note)}</p><p>全プランではなく、下記の代表プランを比較します。割引前・税込の通常料金が基本です。期間限定特典や未確認の割引を加算しません。通話・通信制限条件は公式情報を確認してください。</p><div class="table-wrap"><table><thead><tr><th>プラン</th><th>状態</th><th>基本料金・容量</th><th>初期費用</th><th>確認日</th></tr></thead><tbody>${rows}</tbody></table></div>${verified.map((p) => `<h2>${esc(p.name)}の確認条件</h2><p>${esc(p.note)}</p><p>国内通常通話：${yen(p.callPer30sec)}/30秒。${p.callOptions.map((o) => `${esc(o.name)}：月額${yen(o.monthly)}`).join('、')}。対象外の発信・SMS等は別費用です。</p>`).join('')}<h2>費用と特典を詳しく確認する</h2><ul><li><a href="/guides/costs/">MNPの手数料・解約費用・端末残債の考え方</a></li><li><a href="/guides/benefits/">ポイント還元の条件と受取時期を比べる</a></li><li><a href="/methodology/">6・12・24か月の計算方法と比較範囲</a></li></ul><h2>選ぶ前に確認すること</h2><p>必要な高速データ容量、よく使う場所での通信状況、端末対応、通話オプション、家族割への影響を確認しましょう。新規契約の条件と既存契約の条件が異なることもあります。</p><p><a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">${esc(c.name)}公式の料金情報 ↗</a>（通常リンク）</p>${ads.affiliates
       .filter((a) => a.approved && a.carrierId === c.id)
       .map(
         (a) =>
@@ -202,6 +217,13 @@ for (const c of data.carriers) {
     { index: verified.length > 0 },
   );
 }
+// A human-readable directory uses the same eligible pages as XML/text sitemaps.
+await page(
+  '/sitemap/',
+  'サイトマップ',
+  'MNPのりかえ Naviの計算機、料金比較、解説ページの一覧。',
+  `<h1>サイトマップ</h1><p>料金比較や乗り換えの解説ページを探せます。</p><ul>${pages.map((path) => `<li><a href="${esc(path)}">${esc(pageTitles.get(path))}</a></li>`).join('')}</ul>`,
+);
 await page(
   '/404/',
   'ページが見つかりません',
