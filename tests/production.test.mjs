@@ -53,6 +53,11 @@ test('production build generates the approved origin and excludes pending pages 
       /Allow: \/\nSitemap: https:\/\/mnp-test\.example\/sitemap\.xml/,
     );
     const sitemap = await read('sitemap.xml');
+    const directory = await read('sitemap/index.html');
+    assert.match(directory, /href="\/carriers\/ahamo\/"/);
+    assert.doesNotMatch(directory, /href="\/carriers\/ymobile\/"|href="\/diagnostics\/"|href="\/404\/"/);
+    assert.match(home, /href="\/sitemap\/"/);
+    assert.match(sitemap, /<loc>https:\/\/mnp-test\.example\/sitemap\/<\/loc>/);
     assert.match(
       sitemap,
       /<loc>https:\/\/mnp-test\.example\/carriers\/ahamo\/<\/loc>/,

@@ -22,7 +22,7 @@ class SitemapTests(unittest.TestCase):
    tree = ET.parse(work/'dist/sitemap.xml')
    self.assertEqual(tree.getroot().tag,'{'+NS['s']+'}urlset')
    urls = [node.text for node in tree.findall('s:url/s:loc',NS)]
-   self.assertEqual(len(urls),20)
+   self.assertEqual(len(urls),21)
    self.assertEqual(len(set(urls)),len(urls))
    plain = (work/'dist/sitemap.txt').read_text(encoding='utf-8').splitlines()
    self.assertEqual(plain,urls)

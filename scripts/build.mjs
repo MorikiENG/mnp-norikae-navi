@@ -64,8 +64,9 @@ const yen = (n) =>
 await rm('dist', { recursive: true, force: true });
 await mkdir('dist', { recursive: true });
 const pages = [];
+const pageTitles = new Map();
 const header = `<a class="skip" href="#main">本文へスキップ</a><header><div class="header-inner"><a class="logo" href="/"><span class="logo-icon" aria-hidden="true">⇄</span>MNPのりかえ <span style="color:var(--brand)">Navi</span></a><nav aria-label="メインメニュー"><a href="/#calculator">損益を計算</a><a href="/data-status/">料金データ</a><a href="/methodology/">計算のしくみ</a></nav></div></header>`;
-const footer = `<footer><div class="wrap"><div class="footer-row"><div><b>MNPのりかえ Navi</b><p>運営：森樹エンジニアリング</p></div><div class="footer-links"><a href="/about/">運営者情報</a><a href="/privacy/">プライバシー</a><a href="/advertising/">広告掲載ポリシー</a><a href="/methodology/">計算のしくみ</a></div></div><p class="small">© 2026 森樹エンジニアリング　｜　各社の商標は各権利者に帰属します。</p></div></footer>`;
+const footer = `<footer><div class="wrap"><div class="footer-row"><div><b>MNPのりかえ Navi</b><p>運営：森樹エンジニアリング</p></div><div class="footer-links"><a href="/sitemap/">サイトマップ</a><a href="/about/">運営者情報</a><a href="/privacy/">プライバシー</a><a href="/advertising/">広告掲載ポリシー</a><a href="/methodology/">計算のしくみ</a></div></div><p class="small">© 2026 森樹エンジニアリング　｜　各社の商標は各権利者に帰属します。</p></div></footer>`;
 async function page(
   path,
   title,
@@ -108,7 +109,10 @@ async function page(
     recursive: true,
   });
   await writeFile(destination, html);
-  if (index) pages.push(path);
+  if (index) {
+    pages.push(path);
+    pageTitles.set(path, title);
+  }
 }
 const links = data.carriers
   .map(
@@ -141,7 +145,7 @@ const content = {
   privacy: [
     'プライバシーポリシー',
     '入力情報の取り扱いと外部通信について。',
-    `<h1>プライバシーポリシー</h1><p>制定日：2026年10月19日<br>運営：森樹エンジニアリング</p><h2>計算に入力する情報</h2><p>氏名・電話番号・メールアドレス・住所は求めません。月額料金、利用量、契約開始日などの入力は、ブラウザ内のメモリで計算に使用します。当サービスのサーバーへ送信せず、Cookieやローカルストレージにも保存しません。再読み込みすると消去されます。CSV保存は端末内の操作です。</p><h2>外部への通信</h2><p>ページと料金データの取得時、ホスティング事業者にIPアドレス等の接続情報が送信されます。確認版はCloudflare Pagesで配信しています。<a href="https://www.cloudflare.com/privacypolicy/">Cloudflareのプライバシーポリシー</a>をご確認ください。公式サイトへのリンクを開くと、リンク先の方針が適用されます。入力条件をURLに付加しません。</p><h2>広告・解析</h2><p>現在、AdSense、アフィリエイト広告、アクセス解析は有効にしていません。第三者広告スクリプトや広告Cookieを読み込みません。導入時には送信先、送信項目、目的、選択方法を明示し、必要な同意管理を実装して本方針を更新します。広告の有無にかかわらず計算機能を利用できます。</p><h2>お問い合わせ</h2><p>窓口：森樹エンジニアリング（<a href="mailto:moriki.engineering@gmail.com">moriki.engineering@gmail.com</a>）。メールでお送りいただいたメールアドレスと本文は、お問い合わせへの対応・ご連絡・料金情報の誤りの確認に使用します。メールはGmailで受信します。計算に入力した内容が自動的に添付・送信されることはありません。電話番号、契約番号、本人確認書類などは送らないでください。<a href="/about/">運営者情報</a>もご確認ください。</p>`,
+    `<h1>プライバシーポリシー</h1><p>制定日：2026年10月19日<br>運営：森樹エンジニアリング</p><h2>計算に入力する情報</h2><p>氏名・電話番号・メールアドレス・住所は求めません。月額料金、利用量、契約開始日などの入力は、ブラウザ内のメモリで計算に使用します。当サービスのサーバーへ送信せず、Cookieやローカルストレージにも保存しません。再読み込みすると消去されます。CSV保存は端末内の操作です。</p><h2>外部への通信</h2><p>ページと料金データの取得時、ホスティング事業者にIPアドレス等の接続情報が送信されます。確認版はCloudflare Pagesで配信しています。<a href="https://www.cloudflare.com/privacypolicy/">Cloudflareのプライバシーポリシー</a>をご確認ください。公式サイトへのリンクを開くと、リンク先の方針が適用されます。入力条件をURLに付加しません。</p><h2>広告・解析</h2><p>現在、AdSense、アフィリエイト広告、アクセス解析は有効にしていません。第三者広告スクリプトや広告Cookieを読み込みません。導入時には送信先、送信項目、目的、選択方法を明示し、必要な同意管理を実装して本方針を更新します。広告の有無にかかわらず計算機能を利用できます。</p><h2>お問い合わせ</h2><p>窓口：森樹エンジニアリング（<a href="mailto:moriki.engineering@gmail.com">moriki.engineering@gmail.com</a>）。メールでお送りいただいたメールアドレスと本文は、お問い合わせへの対応・ご連絡・料金情報の誤りの確認に使用します。メールはGmailで受信します。計算に入力した内容が自動的に添付・送信されることはありません。電話番号、契約番号、本人確認書類などは送らないでください。<a href="/sitemap/">サイトマップ</a><a href="/about/">運営者情報</a>もご確認ください。</p>`,
   ],
   advertising: [
     '広告掲載ポリシー',
@@ -213,6 +217,13 @@ for (const c of data.carriers) {
     { index: verified.length > 0 },
   );
 }
+// A human-readable directory uses the same eligible pages as XML/text sitemaps.
+await page(
+  '/sitemap/',
+  'サイトマップ',
+  'MNPのりかえ Naviの計算機、料金比較、解説ページの一覧。',
+  `<h1>サイトマップ</h1><p>料金比較や乗り換えの解説ページを探せます。</p><ul>${pages.map((path) => `<li><a href="${esc(path)}">${esc(pageTitles.get(path))}</a></li>`).join('')}</ul>`,
+);
 await page(
   '/404/',
   'ページが見つかりません',
