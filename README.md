@@ -29,7 +29,7 @@ npm run preview
 - 公式参照先・確認日・比較対象外の理由を表示
 - 12ブランドの説明ページ、独自解説、運営者情報、プライバシー・広告ポリシー
 - title/description、JSON-LD、公開URL設定時のcanonical・sitemap、robots.txt
-- 広告領域、承認済みアフィリエイトリンク管理。広告スクリプトは未導入
+- 広告領域、承認済みアフィリエイトリンク管理。承認済みAdSense自動広告を本番のみ配信
 - 公式ページの変更検知と確認候補PR、CI
 
 ## 料金データ
@@ -57,7 +57,7 @@ GitHubの「Allow GitHub Actions to create and approve pull requests」を有効
 
 ## 公開状態
 
-**2026年10月19日、運営者が正式公開を承認しました。** 公開先は https://mnp-norikae-navi.pages.dev/ 。承認記録と本番ブランチを `data/publication.json` で管理し、Cloudflare Pagesのmainビルドだけ検索許可・canonical・サイトマップを生成します。ローカルとプレビューブランチはnoindexです。本番配信への反映確認とSearch Consoleサイトマップ送信は運営者と確認します。広告は無効のままです。
+**2026年10月19日、運営者が正式公開を承認しました。** 公開先は https://mnp-norikae-navi.pages.dev/ 。承認記録と本番ブランチを `data/publication.json` で管理し、Cloudflare Pagesのmainビルドだけ検索許可・canonical・サイトマップを生成します。ローカルとプレビューブランチはnoindexです。本番配信への反映確認とSearch Consoleサイトマップ送信は運営者と確認します。AdSenseは承認申告に基づき本番で有効、アフィリエイトは無効です。
 
 [docs/deployment.md](docs/deployment.md) にCloudflare Pagesの設定・公開前確認を記載しています。[docs/monetization.md](docs/monetization.md) に広告収益化に必要な作業を記載しています。
 
@@ -65,4 +65,4 @@ GitHubの「Allow GitHub Actions to create and approve pull requests」を有効
 
 全プラン・全割引・全キャンペーン、契約条件別の解約料自動判定、日割り・請求締め日、端末返却・残価免除、世帯全体の自動計算は未対応です。法定付加料金、SMS、対象外通話、セット回線やカードの費用等は比較範囲外で、総請求額ではありません。詳細はサイト内の計算方法でも明示しています。
 
-AdSenseの実スクリプト配信は、申請承認・プライバシー/同意管理・CSP見直し後に実装する必要があります。現在は広告なしでも動作する領域と設定検証を用意しています。
+AdSense自動広告コードを本番の共通headに設置しています。管理画面での自動広告・必要な地域向けCMP設定、実機での広告配置確認は運営者が行います。詳細は docs/monetization.md を参照してください。

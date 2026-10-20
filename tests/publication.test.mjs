@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtemp, cp, readFile, writeFile, rm } from 'node:fs/promises';
+import { mkdtemp, cp, readFile, writeFile, rm, readdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
@@ -63,6 +63,20 @@ for (const scenario of [
       );
       assert.equal(info.production, scenario.production);
       const html = await readFile(path.join(cwd, 'dist/index.html'), 'utf8');
+      async function checkAds(dir) {
+        for (const entry of await readdir(dir, { withFileTypes: true })) {
+          const file = path.join(dir, entry.name);
+          if (entry.isDirectory()) await checkAds(file);
+          else if (entry.name.endsWith('.html') && entry.name !== 'googled86428f90575e69a.html') {
+            const content = await readFile(file, 'utf8');
+            const head = content.split('</head>')[0];
+            assert.equal((head.match(/src="https:\/\/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js\?client=ca-pub-7686370936641694"/g) || []).length, scenario.production ? 1 : 0, file);
+          }
+        }
+      }
+      await checkAds(path.join(cwd, 'dist'));
+      const headers = await readFile(path.join(cwd, 'dist/_headers'), 'utf8');
+      assert.equal(headers.includes('https://*.googlesyndication.com'), scenario.production);
       const robots = await readFile(path.join(cwd, 'dist/robots.txt'), 'utf8');
       if (scenario.production) {
         const sitemap = await readFile(

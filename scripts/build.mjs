@@ -48,6 +48,14 @@ if (
 for (const a of ads.affiliates)
   if (a.approved && (!a.approvalRecord || !/^https:\/\//.test(a.url)))
     throw Error('広告リンクの承認記録とHTTPS URLが必要です');
+const autoAds = production && ads.adsense.approved && ads.adsense.autoAds === true;
+const adsenseScript = autoAds
+  ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ads.adsense.publisherId}" crossorigin="anonymous"></script>`
+  : '';
+const googleAdSources = 'https://*.googlesyndication.com https://*.doubleclick.net https://*.googleadservices.com https://*.google.com https://*.gstatic.com';
+const contentSecurityPolicy = autoAds
+  ? `default-src 'self'; script-src 'self' ${googleAdSources}; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ${googleAdSources}; frame-src ${googleAdSources}; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'`
+  : "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'";
 const esc = (s) =>
   String(s).replace(
     /[&<>"']/g,
@@ -90,7 +98,7 @@ async function page(
         }
       : {}),
   };
-  const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}${home ? '' : ' | MNPのりかえ Navi'}</title><meta name="description" content="${esc(description)}"><meta name="google-adsense-account" content="ca-pub-7686370936641694"><meta name="google-site-verification" content="eaIJri9lcP0T4RwPPBHuA5Ff4wpBPKTIlGUgFuHhc6U"><meta name="theme-color" content="#087e74">${!production || !index ? '<meta name="robots" content="noindex,nofollow">' : ''}${origin ? `<link rel="canonical" href="${esc(url)}"><meta property="og:url" content="${esc(url)}">` : ''}<meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:type" content="website"><meta property="og:locale" content="ja_JP"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css"><script type="application/ld+json">${JSON.stringify(json).replace(/</g, '\\u003c')}</script>${home ? '<script type="module" src="/app.mjs"></script>' : ''}</head><body>${header}<main id="main" class="${home ? 'wrap' : 'legal'}">${content}</main>${footer}</body></html>`;
+  const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}${home ? '' : ' | MNPのりかえ Navi'}</title><meta name="description" content="${esc(description)}"><meta name="google-adsense-account" content="ca-pub-7686370936641694"><meta name="google-site-verification" content="eaIJri9lcP0T4RwPPBHuA5Ff4wpBPKTIlGUgFuHhc6U"><meta name="theme-color" content="#087e74">${!production || !index ? '<meta name="robots" content="noindex,nofollow">' : ''}${origin ? `<link rel="canonical" href="${esc(url)}"><meta property="og:url" content="${esc(url)}">` : ''}<meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:type" content="website"><meta property="og:locale" content="ja_JP"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css"><script type="application/ld+json">${JSON.stringify(json).replace(/</g, '\\u003c')}</script>${home ? '<script type="module" src="/app.mjs"></script>' : ''}${adsenseScript}</head><body>${header}<main id="main" class="${home ? 'wrap' : 'legal'}">${content}</main>${footer}</body></html>`;
   const destination =
     path === '/' ? 'dist/index.html' : `dist${path}index.html`;
   await mkdir(destination.slice(0, destination.lastIndexOf('/')), {
@@ -130,12 +138,12 @@ const content = {
   privacy: [
     'プライバシーポリシー',
     '入力情報の取り扱いと外部通信について。',
-    `<h1>プライバシーポリシー</h1><p>制定日：2026年10月19日<br>運営：森樹エンジニアリング</p><h2>計算に入力する情報</h2><p>氏名・電話番号・メールアドレス・住所は求めません。月額料金、利用量、契約開始日などの入力は、ブラウザ内のメモリで計算に使用します。当サービスのサーバーへ送信せず、Cookieやローカルストレージにも保存しません。再読み込みすると消去されます。CSV保存は端末内の操作です。</p><h2>外部への通信</h2><p>ページと料金データの取得時、ホスティング事業者にIPアドレス等の接続情報が送信されます。確認版はCloudflare Pagesで配信しています。<a href="https://www.cloudflare.com/privacypolicy/">Cloudflareのプライバシーポリシー</a>をご確認ください。公式サイトへのリンクを開くと、リンク先の方針が適用されます。入力条件をURLに付加しません。</p><h2>広告・解析</h2><p>現在、AdSense、アフィリエイト広告、アクセス解析は有効にしていません。第三者広告スクリプトや広告Cookieを読み込みません。導入時には送信先、送信項目、目的、選択方法を明示し、必要な同意管理を実装して本方針を更新します。広告の有無にかかわらず計算機能を利用できます。</p><h2>お問い合わせ</h2><p>窓口：森樹エンジニアリング（<a href="mailto:moriki.engineering@gmail.com">moriki.engineering@gmail.com</a>）。メールでお送りいただいたメールアドレスと本文は、お問い合わせへの対応・ご連絡・料金情報の誤りの確認に使用します。メールはGmailで受信します。計算に入力した内容が自動的に添付・送信されることはありません。電話番号、契約番号、本人確認書類などは送らないでください。<a href="/about/">運営者情報</a>もご確認ください。</p>`,
+    `<h1>プライバシーポリシー</h1><p>制定日：2026年10月19日<br>運営：森樹エンジニアリング</p><h2>計算に入力する情報</h2><p>氏名・電話番号・メールアドレス・住所は求めません。月額料金、利用量、契約開始日などの入力は、ブラウザ内のメモリで計算に使用します。当サービスのサーバーへ送信せず、Cookieやローカルストレージにも保存しません。再読み込みすると消去されます。CSV保存は端末内の操作です。</p><h2>外部への通信</h2><p>ページと料金データの取得時、ホスティング事業者にIPアドレス等の接続情報が送信されます。Cloudflare Pagesで配信しています。<a href="https://www.cloudflare.com/privacypolicy/">Cloudflareのプライバシーポリシー</a>をご確認ください。公式サイトへのリンクを開くと、リンク先の方針が適用されます。入力条件をURLに付加しません。</p><h2>広告・解析</h2><p>Google AdSenseの自動広告を利用します。Googleおよびそのパートナーは、広告配信・効果測定・不正防止のため、Cookie等を使用し、IPアドレス、端末・ブラウザ情報、閲覧ページや広告への操作情報を取得する場合があります。<a href="https://policies.google.com/technologies/ads">Googleの広告に関する説明</a>と<a href="https://policies.google.com/technologies/partner-sites">Googleによるデータ利用</a>をご確認ください。広告のパーソナライズは<a href="https://myadcenter.google.com/">マイ アド センター</a>から管理できます。計算入力を広告向けに送信する独自処理は実装していません。アフィリエイト広告・アクセス解析は導入していません。広告の有無にかかわらず計算機能を利用できます。</p><h2>お問い合わせ</h2><p>窓口：森樹エンジニアリング（<a href="mailto:moriki.engineering@gmail.com">moriki.engineering@gmail.com</a>）。メールでお送りいただいたメールアドレスと本文は、お問い合わせへの対応・ご連絡・料金情報の誤りの確認に使用します。メールはGmailで受信します。計算に入力した内容が自動的に添付・送信されることはありません。電話番号、契約番号、本人確認書類などは送らないでください。<a href="/about/">運営者情報</a>もご確認ください。</p>`,
   ],
   advertising: [
     '広告掲載ポリシー',
     '広告とランキングの関係、広告掲載条件を公開します。',
-    `<h1>広告掲載ポリシー</h1><p>当サービスはGoogle AdSenseと携帯キャリア関連のアフィリエイトによる運営を予定しています。現在、広告配信・提携リンクは有効にしていません。</p><h2>順位は経済的な条件で決めます</h2><p>ユーザーが選んだ6・12・24か月の現金支出差額で並べます。ポイントは別枠です。広告単価、成果報酬、提携の有無は順位に影響しません。</p><h2>広告の表示</h2><p>承認済みの広告のみ掲載し、「広告」または「PR」と表示します。通常の公式サイトへのリンクと区別し、広告リンクには sponsored 属性を付けます。入力ボタンと誤認する配置・表現は使用しません。</p><h2>掲載前の確認</h2><p>提携承認、広告主の条件、リンク先、プライバシーポリシー、必要な同意管理を確認してから有効にします。未承認の広告を掲載せず、広告ブロッカーを使用しても計算は動作します。</p>`,
+    `<h1>広告掲載ポリシー</h1><p>当サービスはGoogle AdSenseの自動広告を利用します。広告の位置・形式はGoogleの自動広告設定に応じて決まります。携帯キャリア関連のアフィリエイトリンクは現在掲載していません。</p><h2>順位は経済的な条件で決めます</h2><p>ユーザーが選んだ6・12・24か月の現金支出差額で並べます。ポイントは別枠です。広告単価、成果報酬、提携の有無は順位に影響しません。</p><h2>広告の表示</h2><p>承認済みの広告のみ掲載し、「広告」または「PR」と表示します。通常の公式サイトへのリンクと区別し、広告リンクには sponsored 属性を付けます。入力ボタンと誤認する配置・表現は使用しません。</p><h2>掲載前の確認</h2><p>提携承認、広告主の条件、リンク先、プライバシーポリシー、必要な同意管理を確認してから有効にします。未承認の広告を掲載せず、広告ブロッカーを使用しても計算は動作します。</p>`,
   ],
   methodology: [
     '計算方法と比較の範囲',
@@ -239,7 +247,7 @@ if (production) {
 }
 await writeFile(
   'dist/_headers',
-  `/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: DENY\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'\n/catalog.json\n  Cache-Control: public, max-age=300\n/diagnostics/*\n  Cache-Control: no-store\n/build-info.json\n  Cache-Control: no-store\n/robots.txt\n  Cache-Control: no-cache\n/sitemap.txt\n  Content-Type: text/plain; charset=utf-8\n  Cache-Control: no-cache\n/sitemap.xml\n  Content-Type: application/xml; charset=utf-8\n  Cache-Control: no-cache\n`,
+  `/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: DENY\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy: ${contentSecurityPolicy}\n/catalog.json\n  Cache-Control: public, max-age=300\n/diagnostics/*\n  Cache-Control: no-store\n/build-info.json\n  Cache-Control: no-store\n/robots.txt\n  Cache-Control: no-cache\n/sitemap.txt\n  Content-Type: text/plain; charset=utf-8\n  Cache-Control: no-cache\n/sitemap.xml\n  Content-Type: application/xml; charset=utf-8\n  Cache-Control: no-cache\n`,
 );
 await writeFile(
   'dist/build-info.json',

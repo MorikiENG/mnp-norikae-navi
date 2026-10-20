@@ -1,8 +1,10 @@
 {
   "adsense": {
-    "approved": false,
-    "publisherId": null,
-    "slots": []
+    "approved": true,
+    "publisherId": "ca-pub-7686370936641694",
+    "slots": [],
+    "autoAds": true,
+    "approvalRecord": "運営者がGoogle AdSense審査通過を申告し、全ページへの自動広告コード設置を明示承認。"
   },
   "affiliates": []
 }

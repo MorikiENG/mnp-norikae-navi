@@ -36,7 +36,7 @@ test('internal page and asset links resolve', async () => {
     }
   }
 });
-test('unapproved ads do not load third-party scripts or affiliated links', async () => {
+test('preview does not load third-party ads or affiliated links', async () => {
   const h = await readFile('dist/index.html', 'utf8');
   assert.doesNotMatch(h, /<script[^>]+src="https?:/);
   assert.doesNotMatch(h, /rel="sponsored/);
