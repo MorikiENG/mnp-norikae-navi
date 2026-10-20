@@ -34,6 +34,20 @@ test('production build generates the approved origin and excludes pending pages 
     const home = await read('index.html');
     assert.match(home, /rel="canonical" href="https:\/\/mnp-test\.example\/"/);
     assert.doesNotMatch(home, /noindex,nofollow/);
+    assert.match(home, /<title>MNP乗り換え損益シミュレーション・料金比較/);
+    const carrier = await read('carriers/ahamo/index.html');
+    const structured = JSON.parse(carrier.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);
+    assert.equal(structured.breadcrumb['@type'], 'BreadcrumbList');
+    assert.deepEqual(structured.breadcrumb.itemListElement.map(x => [x.position, x.item]), [
+      [1, 'https://mnp-test.example/'],
+      [2, 'https://mnp-test.example/carriers/ahamo/'],
+    ]);
+    assert.match(carrier, /aria-label="パンくずリスト"/);
+    assert.match(carrier, /aria-current="page">ahamoの料金とMNP比較/);
+    for (const route of ['/guides/costs/', '/guides/benefits/', '/methodology/'])
+      assert.ok(carrier.includes(`href="${route}"`), route);
+    assert.doesNotMatch(await read('404/index.html'), /BreadcrumbList/);
+    assert.doesNotMatch(await read('carriers/ymobile/index.html'), /BreadcrumbList/);
     assert.match(
       await read('robots.txt'),
       /Allow: \/\nSitemap: https:\/\/mnp-test\.example\/sitemap\.xml/,

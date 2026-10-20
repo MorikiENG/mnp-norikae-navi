@@ -74,6 +74,9 @@ async function page(
   { home = false, index = true } = {},
 ) {
   const url = origin + path;
+  const breadcrumb = !home && index
+    ? `<nav aria-label="パンくずリスト"><a href="/">ホーム</a> / <span aria-current="page">${esc(title)}</span></nav>`
+    : '';
   const json = {
     '@context': 'https://schema.org',
     '@type': home ? 'WebApplication' : 'WebPage',
@@ -90,7 +93,15 @@ async function page(
         }
       : {}),
   };
-  const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}${home ? '' : ' | MNPのりかえ Navi'}</title><meta name="description" content="${esc(description)}"><meta name="google-site-verification" content="eaIJri9lcP0T4RwPPBHuA5Ff4wpBPKTIlGUgFuHhc6U"><meta name="theme-color" content="#087e74">${!production || !index ? '<meta name="robots" content="noindex,nofollow">' : ''}${origin ? `<link rel="canonical" href="${esc(url)}"><meta property="og:url" content="${esc(url)}">` : ''}<meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:type" content="website"><meta property="og:locale" content="ja_JP"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css"><script type="application/ld+json">${JSON.stringify(json).replace(/</g, '\\u003c')}</script>${home ? '<script type="module" src="/app.mjs"></script>' : ''}</head><body>${header}<main id="main" class="${home ? 'wrap' : 'legal'}">${content}</main>${footer}</body></html>`;
+  // Match the visible navigation; do not invent category pages or review dates.
+  if (origin && !home && index) json.breadcrumb = {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'ホーム', item: origin + '/' },
+      { '@type': 'ListItem', position: 2, name: title, item: url },
+    ],
+  };
+  const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}${home ? '' : ' | MNPのりかえ Navi'}</title><meta name="description" content="${esc(description)}"><meta name="google-site-verification" content="eaIJri9lcP0T4RwPPBHuA5Ff4wpBPKTIlGUgFuHhc6U"><meta name="theme-color" content="#087e74">${!production || !index ? '<meta name="robots" content="noindex,nofollow">' : ''}${origin ? `<link rel="canonical" href="${esc(url)}"><meta property="og:url" content="${esc(url)}">` : ''}<meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:type" content="website"><meta property="og:locale" content="ja_JP"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css"><script type="application/ld+json">${JSON.stringify(json).replace(/</g, '\\u003c')}</script>${home ? '<script type="module" src="/app.mjs"></script>' : ''}</head><body>${header}<main id="main" class="${home ? 'wrap' : 'legal'}">${breadcrumb}${content}</main>${footer}</body></html>`;
   const destination =
     path === '/' ? 'dist/index.html' : `dist${path}index.html`;
   await mkdir(destination.slice(0, destination.lastIndexOf('/')), {
@@ -116,7 +127,7 @@ home = home
   .replace('{{CARRIER_LINKS}}', links);
 await page(
   '/',
-  'MNPのりかえ Navi｜その乗り換え、本当にお得？',
+  'MNP乗り換え損益シミュレーション・料金比較 | MNPのりかえ Navi',
   '携帯電話のMNP乗り換えでいくら変わる？公式確認済み料金と手数料から6・12・24か月の損益を無料比較。会員登録不要、ブラウザ内で計算。',
   home,
   { home: true },
@@ -192,7 +203,7 @@ for (const c of data.carriers) {
     `/carriers/${c.id}/`,
     `${c.name}の料金とMNP比較`,
     `${c.name}の確認済み代表プラン・費用・注意事項と公式参照先。`,
-    `<h1>${esc(c.name)}の料金とMNP比較</h1><p>${esc(c.note)}</p><p>全プランではなく、下記の代表プランを比較します。割引前・税込の通常料金が基本です。期間限定特典や未確認の割引を加算しません。通話・通信制限条件は公式情報を確認してください。</p><div class="table-wrap"><table><thead><tr><th>プラン</th><th>状態</th><th>基本料金・容量</th><th>初期費用</th><th>確認日</th></tr></thead><tbody>${rows}</tbody></table></div>${verified.map((p) => `<h2>${esc(p.name)}の確認条件</h2><p>${esc(p.note)}</p><p>国内通常通話：${yen(p.callPer30sec)}/30秒。${p.callOptions.map((o) => `${esc(o.name)}：月額${yen(o.monthly)}`).join('、')}。対象外の発信・SMS等は別費用です。</p>`).join('')}<h2>選ぶ前に確認すること</h2><p>必要な高速データ容量、よく使う場所での通信状況、端末対応、通話オプション、家族割への影響を確認しましょう。新規契約の条件と既存契約の条件が異なることもあります。</p><p><a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">${esc(c.name)}公式の料金情報 ↗</a>（通常リンク）</p>${ads.affiliates
+    `<h1>${esc(c.name)}の料金とMNP比較</h1><p>${esc(c.note)}</p><p>全プランではなく、下記の代表プランを比較します。割引前・税込の通常料金が基本です。期間限定特典や未確認の割引を加算しません。通話・通信制限条件は公式情報を確認してください。</p><div class="table-wrap"><table><thead><tr><th>プラン</th><th>状態</th><th>基本料金・容量</th><th>初期費用</th><th>確認日</th></tr></thead><tbody>${rows}</tbody></table></div>${verified.map((p) => `<h2>${esc(p.name)}の確認条件</h2><p>${esc(p.note)}</p><p>国内通常通話：${yen(p.callPer30sec)}/30秒。${p.callOptions.map((o) => `${esc(o.name)}：月額${yen(o.monthly)}`).join('、')}。対象外の発信・SMS等は別費用です。</p>`).join('')}<h2>費用と特典を詳しく確認する</h2><ul><li><a href="/guides/costs/">MNPの手数料・解約費用・端末残債の考え方</a></li><li><a href="/guides/benefits/">ポイント還元の条件と受取時期を比べる</a></li><li><a href="/methodology/">6・12・24か月の計算方法と比較範囲</a></li></ul><h2>選ぶ前に確認すること</h2><p>必要な高速データ容量、よく使う場所での通信状況、端末対応、通話オプション、家族割への影響を確認しましょう。新規契約の条件と既存契約の条件が異なることもあります。</p><p><a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">${esc(c.name)}公式の料金情報 ↗</a>（通常リンク）</p>${ads.affiliates
       .filter((a) => a.approved && a.carrierId === c.id)
       .map(
         (a) =>
